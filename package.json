@@ -10,13 +10,18 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"antd-mobile": "^5.39.0",
+		"firebase": "^11.4.0",
+		"react": "18",
+		"react-dom": "18",
+		"react-icons": "^5.5.0",
+		"react-router": "^7.3.0",
+		"zustand": "^5.0.3"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.18.0",
-		"@types/react": "^19.0.8",
-		"@types/react-dom": "^19.0.3",
+		"@types/react": "18",
+		"@types/react-dom": "18",
 		"@vite-pwa/assets-generator": "^0.2.6",
 		"@vitejs/plugin-react": "^4.2.1",
 		"eslint": "^9.18.0",
