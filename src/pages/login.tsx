@@ -24,17 +24,24 @@ export default function Login() {
 			<Button
 				block
 				size="large"
-				onClick={login}>
+				shape="rounded"
+				onClick={login}
+				style={{
+					"--border-color": "var(--adm-color-text)",
+				}}>
 				<Space>
 					<FcGoogle size={22} />
-					Log in with Google
+					Sign in with Google
 				</Space>
 			</Button>
 		</Space>
 		<style>
 			{`
-			body {
-				background-color: #E9B4CC;
+			html[data-prefers-color-scheme="dark"] body {
+				background-color:hsl(333, 54.60%, 12.00%);
+			}
+			html:not([data-prefers-color-scheme="dark"]) body {
+				background-color:hsl(333, 54.60%, 81.00%);
 			}
 			`}
 		</style>

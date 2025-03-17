@@ -22,6 +22,10 @@ export default defineConfig({
 				short_name: "HE2B",
 				description: "he2b-companion",
 				theme_color: "#E9B4CC",
+				display: "standalone",
+				lang: "fr",
+				orientation: "portrait",
+				start_url: "/",
 			},
 
 			injectManifest: {
