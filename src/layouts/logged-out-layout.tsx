@@ -2,9 +2,9 @@ import { Navigate, Outlet } from "react-router";
 import { useAppStore } from "../store";
 
 export default function LoggedInLayout() {
-	const { user } = useAppStore();
+	const { isLoggedIn } = useAppStore();
 
-	return !user
+	return !isLoggedIn()
 		? <Outlet />
 		: <Navigate to="/home" />;
 }

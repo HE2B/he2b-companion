@@ -1,21 +1,24 @@
-import { Space } from "antd-mobile";
 import { Navigate, Outlet } from "react-router";
 import Navbar from "../components/navbar";
 import { useAppStore } from "../store";
 
 export default function LoggedInLayout() {
-	const { user } = useAppStore();
+	const { isLoggedIn } = useAppStore();
 
-	return !user
+	return !isLoggedIn()
 		? <Navigate to="/login" />
-		: <Space
-			direction="vertical"
-			block={true}
-			style={{
-				marginInline: "1rem",
-				height: "calc(100% - calc(env(safe-area-inset-top) * 1) - calc(env(safe-area-inset-bottom) * 1))"
+		: <div style={{
+			display: "flex",
+			flexDirection: "column",
+			height: "calc(100% - calc(env(safe-area-inset-top) * 1) - calc(env(safe-area-inset-bottom) * 1))",
+			justifyContent: "space-between",
+			marginInline: "1rem",
+		}}>
+			<div style={{
+				overflowY: "auto",
 			}}>
-			<Outlet />
+				<Outlet />
+			</div>
 			<Navbar />
-		</Space>;
+		</div>;
 }

@@ -11,6 +11,8 @@ import PWABadge from "./PWABadge";
 import LoggedInLayout from "./layouts/logged-in-layout";
 import LoggedOutLayout from "./layouts/logged-out-layout";
 import Home from "./pages/home";
+import Marks from "./pages/marks";
+import PersonalInfo from "./pages/personal-info";
 import Settings from "./pages/settings";
 
 export default function App() {
@@ -28,6 +30,8 @@ export default function App() {
 						<Route path="news" element={<News />} />
 						<Route path="profile" element={<Profile />} />
 						<Route path="settings" element={<Settings />} />
+						<Route path="marks" element={<Marks />} />
+						<Route path="personal-info" element={<PersonalInfo />} />
 					</Route>
 				</Routes>
 				<PWABadge />
