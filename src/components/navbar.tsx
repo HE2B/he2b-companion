@@ -1,14 +1,14 @@
 import { Avatar, TabBar } from "antd-mobile";
 import { useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { TbCalendarWeekFilled, TbHomeFilled, TbNews, TbUserFilled } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../store";
-import { I18nextProvider, useTranslation } from 'react-i18next';
-import i18next from "i18next"; 
 
 export default function Navbar() {
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const { user } = useAppStore();
+
 	const tabs = [
 		{
 			title: t("home"),
@@ -28,7 +28,6 @@ export default function Navbar() {
 		{
 			title: t("profile"),
 			path: "/profile",
-			// icon: <TbUserFilled />,
 			icon: <Avatar
 				src={user?.photoURL ?? ""}
 				fallback={<TbUserFilled />}
@@ -38,7 +37,7 @@ export default function Navbar() {
 	] as const;
 
 	const location = useLocation();
-	useEffect(() => { }, [location]);
+	useEffect(() => { }, [location, user]);
 
 	const navigate = useNavigate();
 
@@ -50,7 +49,7 @@ export default function Navbar() {
 					title={item.title}
 					key={item.path}
 					onClick={() => navigate(item.path)}
-					style={{padding: 15}}
+					style={{ padding: 15 }}
 				/>
 			))}
 		</TabBar>

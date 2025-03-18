@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useAppStore } from "../store";
 
 export default function Home() {
+<<<<<<< HEAD
     const { t } = useTranslation(); 
     const { user } = useAppStore();
     const firstName = user?.displayName?.split(' ')[0] || '';
@@ -14,6 +15,19 @@ export default function Home() {
             </h2>
         </>
     );
+=======
+	const { t } = useTranslation();
+	const { user } = useAppStore();
+
+	const firstName = user?.displayName?.split(" ")[0] || "";
+
+	return (
+		<>
+			<h1>{t("home")}</h1>
+			<h2>Bonjour {firstName} ! <span className="wave">👋</span></h2>
+		</>
+	);
+>>>>>>> bf1c374d56570e602f4d612f9229d4ab23282bba
 }
 
 const styles = {

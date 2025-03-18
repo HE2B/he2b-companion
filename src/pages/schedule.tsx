@@ -1,13 +1,12 @@
 import { ErrorBlock } from "antd-mobile";
-import { useTranslation } from "react-i18next"; // Import de la traduction
-import i18n from "../../i18n";
+import { useTranslation } from "react-i18next";
 
 export default function Shedule() {
-	const { t } = useTranslation(); // Récupération de la fonction t
+	const { t } = useTranslation();
 
 	return (
 		<>
-			<h1>{t("calendar")}</h1> {/* Correction ici */}
+			<h1>{t("calendar")}</h1>
 			<ErrorBlock status="empty" />
 		</>
 	);
