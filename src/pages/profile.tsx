@@ -13,8 +13,8 @@ export default function Profile() {
 			justify="center">
 
 			<div>
-				<h2>👋 {user?.user.displayName}</h2>
-				<h4>{user?.user.email}</h4>
+				<h2>👋 {user?.displayName}</h2>
+				<h4>{user?.email}</h4>
 			</div>
 
 			<Space

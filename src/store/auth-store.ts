@@ -1,56 +1,58 @@
 import { initializeApp } from "firebase/app";
-import { browserLocalPersistence, getAuth, GoogleAuthProvider, OAuthCredential, setPersistence, signInWithPopup, User } from "firebase/auth";
+import { browserLocalPersistence, getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { getMessaging } from "firebase/messaging";
 import { redirect } from "react-router";
 import { StateCreator } from "zustand";
-import { AppState } from ".";
 import { firebaseConfig, scopes } from "../firebase-config";
+import { AppState } from "./index";
 
 const firebaseApp = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 scopes.forEach(scope => provider.addScope(scope));
 
-const messaging = getMessaging(firebaseApp);
+const auth = getAuth();
+auth.languageCode = "fr";
+auth.setPersistence(browserLocalPersistence);
 
+const messaging = getMessaging(firebaseApp);
 void messaging;
 
 export interface AuthSlice {
-	user: null | {
-		user: User,
-		credential: OAuthCredential,
-	},
+	user: User | null,
 	isLoggedIn: () => boolean,
 	login: () => Promise<void>,
 	logout: () => Promise<void>,
 }
 
-export const createAuthStore: StateCreator<AppState, [], [], AuthSlice> = (set, get) => ({
-	user: null,
-	isLoggedIn: () => get().user !== null,
-	login: () => {
-		const auth = getAuth(firebaseApp);
-		auth.languageCode = "fr";
+export const createAuthStore: StateCreator<AppState, [], [], AuthSlice> = (set, get) => {
+	auth.onAuthStateChanged(user => {
+		if(!user) return set(() => ({ user: null }));
 
-		return setPersistence(auth, browserLocalPersistence)
-			.then(() => signInWithPopup(auth, provider))
+		set(() => ({ user }));
+		redirect("/home");
+	});
+	return {
+		user: null,
+		isLoggedIn: () => get().user !== null,
+		login: () => signInWithPopup(auth, provider)
 			.then(result => {
 				const user = result?.user;
-				const credential = GoogleAuthProvider.credentialFromResult(result);
-				if(!user || !credential) throw new Error("No user or credential");
+				// const credential = GoogleAuthProvider.credentialFromResult(result);
+				if(!user) throw new Error("No user or credential");
 
 				// IdP data available using getAdditionalUserInfo(result)
-				set(() => ({ user: { user, credential } }));
+				set(() => ({ user }));
 
 				redirect("/home");
 			})
-			.catch(console.error);
-	},
-	logout: () => getAuth(firebaseApp)
-		.signOut()
-		.then(() => {
-			set(() => ({ user: null }));
-			redirect("/login");
-		})
-		.catch(console.error),
-});
+			.catch(console.error),
+		logout: () => auth
+			.signOut()
+			.then(() => {
+				set(() => ({ user: null }));
+				redirect("/login");
+			})
+			.catch(console.error),
+	};
+};

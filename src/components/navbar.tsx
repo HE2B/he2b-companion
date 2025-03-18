@@ -27,7 +27,7 @@ export default function Navbar() {
 			path: "/profile",
 			// icon: <TbUserFilled />,
 			icon: <Avatar
-				src={user?.user.photoURL ?? ""}
+				src={user?.photoURL ?? ""}
 				fallback={<TbUserFilled />}
 				style={{ '--size': '1.5rem' }}
 			/>
