@@ -2,39 +2,25 @@ import { useTranslation } from "react-i18next";
 import { useAppStore } from "../store";
 
 export default function Home() {
-<<<<<<< HEAD
-    const { t } = useTranslation(); 
-    const { user } = useAppStore();
-    const firstName = user?.displayName?.split(' ')[0] || '';
-
-    return (
-        <>
-            <h2 style={styles.titre}>
-                {t("hello")} {firstName} ! 
-                <span className="wave">👋</span>
-            </h2>
-        </>
-    );
-=======
 	const { t } = useTranslation();
 	const { user } = useAppStore();
-
-	const firstName = user?.displayName?.split(" ")[0] || "";
+	const firstName = user?.displayName?.split(' ')[0] || '';
 
 	return (
 		<>
-			<h1>{t("home")}</h1>
-			<h2>Bonjour {firstName} ! <span className="wave">👋</span></h2>
+			<h2 style={styles.titre}>
+				{t("hello")} {firstName} !
+				<span className="wave">👋</span>
+			</h2>
 		</>
 	);
->>>>>>> bf1c374d56570e602f4d612f9229d4ab23282bba
 }
 
 const styles = {
-    titre: {
-        textAlign: "center" as "center",
-        justifyContent: "center" as "center",
-    }
+	titre: {
+		textAlign: "center" as "center",
+		justifyContent: "center" as "center",
+	}
 };
 
 const waveStyle = `
