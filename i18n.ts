@@ -14,7 +14,8 @@ const resources = {
     profile : "Profil",
     logout: 'LogOut',
     pinfo: "personal info",
-    back : "Go back"
+    back : "Go back",
+    hello : "Hello"
 } },
   fr: { translation: { 
     settings: "Paramètres", 
@@ -28,7 +29,8 @@ const resources = {
     profile : "Profile",
     logout: "Se déconnecter",
     pinfo: "info personnel",
-    back : "retour"
+    back : "retour",
+    hello : "Bonjour"
 } }
 };
 
