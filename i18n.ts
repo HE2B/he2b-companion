@@ -11,9 +11,13 @@ const resources = {
     home : "Home",
     calendar: "Calendar",
     news : "News",
-    profile : "Profil"
+    profile : "Profil",
+    logout: 'LogOut',
+    pinfo: "personal info",
+    back : "Go back"
 } },
-  fr: { translation: { settings: "Paramètres", 
+  fr: { translation: { 
+    settings: "Paramètres", 
     theme: "Thème", 
     language: "Langue", 
     light: "Clair", 
@@ -21,7 +25,10 @@ const resources = {
     home : "Accueil",
     calendar : "Calendrier",
     news : "Actualité",
-    profile : "Profile"
+    profile : "Profile",
+    logout: "Se déconnecter",
+    pinfo: "info personnel",
+    back : "retour"
 } }
 };
 

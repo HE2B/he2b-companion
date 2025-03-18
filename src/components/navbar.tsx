@@ -50,6 +50,7 @@ export default function Navbar() {
 					title={item.title}
 					key={item.path}
 					onClick={() => navigate(item.path)}
+					style={{padding: 15}}
 				/>
 			))}
 		</TabBar>

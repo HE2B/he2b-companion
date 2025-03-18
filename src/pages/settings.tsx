@@ -49,7 +49,7 @@ export default function Settings() {
 					<Segmented
 						options={languages}
 						value={i18n.language}
-						onChange={(lang) => i18next.changeLanguage(lang)} // Utilisation directe d'i18next
+                        onChange={(lang) => i18next.changeLanguage(lang as string)} // Utilisation directe d'i18next
 						block
 					/>
 				</Form.Item>

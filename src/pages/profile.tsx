@@ -1,10 +1,11 @@
 import { Button, Space } from "antd-mobile";
 import { Link } from "react-router";
 import { useAppStore } from "../store";
+import { useTranslation } from "react-i18next"; // Import i18n
 
 export default function Profile() {
 	const { logout, user } = useAppStore();
-
+		const { t, i18n } = useTranslation(); // Traduction et changement de langue
 	return <>
 		<h1>Profile</h1>
 		<Space
@@ -25,7 +26,7 @@ export default function Profile() {
 					<Button
 						block
 						style={linkButtonStyle}>
-						Personal Info
+						{t("pinfo")}
 					</Button>
 				</Link>
 				<Link to="/marks" style={linkStyle}>
@@ -39,7 +40,7 @@ export default function Profile() {
 					<Button
 						block
 						style={linkButtonStyle}>
-						Settings
+						{t("settings")}
 					</Button>
 				</Link>
 				<Button
@@ -47,7 +48,7 @@ export default function Profile() {
 					fill="outline"
 					color="danger"
 					onClick={logout}>
-					Logout
+					{t("logout")}
 				</Button>
 			</Space>
 		</Space>
