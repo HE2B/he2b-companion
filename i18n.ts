@@ -13,7 +13,8 @@ const resources = {
     news : "News",
     profile : "Profil"
 } },
-  fr: { translation: { settings: "Paramètres", 
+  fr: { translation: { 
+    settings: "Paramètres", 
     theme: "Thème", 
     language: "Langue", 
     light: "Clair", 
