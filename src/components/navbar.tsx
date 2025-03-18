@@ -3,27 +3,30 @@ import { useEffect } from "react";
 import { TbCalendarWeekFilled, TbHomeFilled, TbNews, TbUserFilled } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../store";
+import { I18nextProvider, useTranslation } from 'react-i18next';
+import i18next from "i18next"; 
 
 export default function Navbar() {
+	const { t, i18n } = useTranslation();
 	const { user } = useAppStore();
 	const tabs = [
 		{
-			title: "Home",
+			title: t("home"),
 			path: "/home",
 			icon: <TbHomeFilled />,
 		},
 		{
-			title: "Schedule",
+			title: t("calendar"),
 			path: "/schedule",
 			icon: <TbCalendarWeekFilled />,
 		},
 		{
-			title: "News",
+			title: t("news"),
 			path: "/news",
 			icon: <TbNews />,
 		},
 		{
-			title: "Profile",
+			title: t("profile"),
 			path: "/profile",
 			// icon: <TbUserFilled />,
 			icon: <Avatar
