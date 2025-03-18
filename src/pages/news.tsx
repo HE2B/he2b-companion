@@ -1,5 +1,5 @@
 import { InfiniteScroll, List, PullToRefresh, Selector, Space } from "antd-mobile";
-import { useTranslation } from "react-i18next"; // Import de la traduction
+import { useTranslation } from "react-i18next";
 
 const news = [
 	{ id: 1, topic: "absence", date: "2021-09-01" },
@@ -12,7 +12,7 @@ const news = [
 ];
 
 export default function News() {
-	const { t } = useTranslation(); // Récupération de la fonction t
+	const { t } = useTranslation();
 	const topics = [...new Set(news.map(news => news.topic)).values()];
 
 	const filtered = news;
@@ -27,7 +27,7 @@ export default function News() {
 	return (
 		<>
 			<Space direction="vertical" block={true}>
-				<h1>{t("news")}</h1> {/* Utilisation de la traduction */}
+				<h1>{t("news")}</h1>
 
 				<Selector
 					style={{
