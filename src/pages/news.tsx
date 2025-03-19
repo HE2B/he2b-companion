@@ -2,13 +2,13 @@ import { InfiniteScroll, List, PullToRefresh, Selector, Space } from "antd-mobil
 import { useTranslation } from "react-i18next";
 
 const news = [
-	{ id: 1, topic: "absence", date: "2021-09-01" },
-	{ id: 2, topic: "ce", date: "2021-09-01" },
-	{ id: 3, topic: "sar", date: "2021-09-02" },
-	{ id: 4, topic: "absence", date: "2021-09-02" },
-	{ id: 5, topic: "marks", date: "2021-09-03" },
-	{ id: 6, topic: "communication", date: "2021-09-03" },
-	{ id: 7, topic: "other", date: "2021-09-04" },
+	{ id: 1, date: "2021-09-01", topic: "absence" },
+	{ id: 2, date: "2021-09-01", topic: "ce" },
+	{ id: 3, date: "2021-09-02", topic: "sar" },
+	{ id: 4, date: "2021-09-02", topic: "absence" },
+	{ id: 5, date: "2021-09-03", topic: "marks" },
+	{ id: 6, date: "2021-09-03", topic: "communication" },
+	{ id: 7, date: "2021-09-04", topic: "other" },
 ];
 
 export default function News() {
@@ -26,7 +26,10 @@ export default function News() {
 
 	return (
 		<>
-			<Space direction="vertical" block={true}>
+			<Space
+				direction="vertical"
+				block>
+
 				<h1>{t("news")}</h1>
 
 				<Selector
@@ -54,6 +57,7 @@ export default function News() {
 					))}
 					<InfiniteScroll loadMore={loadMore} hasMore={hasMore} />
 				</PullToRefresh>
+
 			</Space>
 		</>
 	);

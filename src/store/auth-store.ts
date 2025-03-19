@@ -21,6 +21,13 @@ void messaging;
 export interface AuthSlice {
 	user: User | null,
 	isLoggedIn: () => boolean,
+	isStudent: () => boolean,
+	isTeacher: () => boolean,
+	getFirstName: () => string,
+	getLastName: () => string,
+	getEmail: () => string,
+	getStudentMatricule: () => string,
+	getTeacherMatricule: () => string,
 	login: () => Promise<void>,
 	logout: () => Promise<void>,
 }
@@ -35,6 +42,13 @@ export const createAuthStore: StateCreator<AppState, [], [], AuthSlice> = (set, 
 	return {
 		user: null,
 		isLoggedIn: () => get().user !== null,
+		isStudent: () => get().user?.email?.endsWith("@etu.he2b.be") ?? false,
+		isTeacher: () => get().user?.email?.endsWith("@he2b.be") ?? false,
+		getFirstName: () => get().user?.displayName?.split(" ")[0] ?? "",
+		getLastName: () => get().user?.displayName?.split(" ").slice(1).join("") ?? "",
+		getEmail: () => get().user?.email ?? "",
+		getStudentMatricule: () => get().user?.email?.split("@")[0] ?? "",
+		getTeacherMatricule: () => get().user?.email?.split("@")[0] ?? "",
 		login: () => signInWithPopup(auth, provider)
 			.then(result => {
 				const user = result?.user;

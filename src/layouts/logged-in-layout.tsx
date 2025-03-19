@@ -5,7 +5,7 @@ import { useAppStore } from "../store";
 export default function LoggedInLayout() {
 	const { isLoggedIn } = useAppStore();
 
-	if (!isLoggedIn()) {
+	if(!isLoggedIn()) {
 		return <Navigate to="/login" />;
 	}
 
@@ -19,10 +19,18 @@ export default function LoggedInLayout() {
 				marginInline: "1rem",
 			}}
 		>
-			<div style={{ overflowY: "auto", flex: 1 }}>
+
+			<div style={{
+				overflowY: "auto",
+				flex: 1,
+				display: "flex",
+				flexDirection: "column",
+			}}>
 				<Outlet />
 			</div>
+
 			<Navbar />
+
 		</div>
 	);
 }

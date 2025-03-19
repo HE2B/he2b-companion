@@ -1,58 +1,63 @@
-import { Form, Segmented } from "antd-mobile";
-import { SegmentedLabeledOption } from "antd-mobile/es/components/segmented/segmented";
+import { Button, Form, Segmented, Space } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 import { TbMoon, TbSun } from "react-icons/tb";
+import { useNavigate } from "react-router";
 import { useAppStore } from "../store";
-import { Theme } from "../store/theme-store";
 
 export default function Settings() {
 	const { t, i18n } = useTranslation();
 	const { theme, setTheme, setLocale } = useAppStore();
+	const navigate = useNavigate();
 
-	const themes: Record<Theme, SegmentedLabeledOption & { value: Theme; }> = {
-		light: {
-			label: t("light"),
-			value: "light",
-			icon: <TbSun />,
-		},
-		dark: {
-			label: t("dark"),
-			value: "dark",
-			icon: <TbMoon />,
-		},
-	};
+	const themes = [
+		{ value: "light", label: t("light"), icon: <TbSun />, },
+		{ value: "dark", label: t("dark"), icon: <TbMoon />, },
+	];
 
-	// Options pour la sélection de langue
 	const languages = [
-		{ label: "Français", value: "fr" },
-		{ label: "English", value: "en" }
+		{ value: "fr", label: t("french"), },
+		{ value: "en", label: t("english"), },
 	];
 
 	return (
 		<>
-			<h1>{t("settings")}</h1>
+			<Space
+				direction="vertical"
+				block>
 
-			<Form layout="vertical">
-				{/* Sélecteur de thème */}
-				<Form.Item label={t("theme")}>
-					<Segmented
-						options={Object.values(themes)}
-						value={theme}
-						onChange={setTheme as any}
-						block
-					/>
-				</Form.Item>
+				<h1>{t("settings")}</h1>
 
-				{/* Sélecteur de langue */}
-				<Form.Item label={t("language")}>
-					<Segmented
-						options={languages}
-						value={i18n.language}
-						onChange={setLocale as any}
-						block
-					/>
-				</Form.Item>
-			</Form>
+				<Form layout="vertical">
+
+					<Form.Item label={t("theme")}>
+						<Segmented
+							options={themes}
+							value={theme}
+							onChange={setTheme as any}
+							block />
+					</Form.Item>
+
+					<Form.Item label={t("language")}>
+						<Segmented
+							options={languages}
+							value={i18n.language}
+							onChange={setLocale as any}
+							block />
+					</Form.Item>
+
+				</Form>
+
+				<br />
+				<br />
+
+				<Button
+					block
+					color="primary"
+					onClick={() => navigate("/profile")}>
+					{t("back")}
+				</Button>
+
+			</Space>
 		</>
 	);
 }

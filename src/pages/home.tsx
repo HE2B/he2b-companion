@@ -1,45 +1,31 @@
+import { Space } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../store";
 
 export default function Home() {
 	const { t } = useTranslation();
-	const { user } = useAppStore();
-	const firstName = user?.displayName?.split(' ')[0] || '';
+	const { getFirstName } = useAppStore();
 
 	return (
 		<>
-			<h2 style={styles.titre}>
-				{t("hello")} {firstName} !
-				<span className="wave">👋</span>
-			</h2>
+			<Space
+				direction="vertical"
+				block>
+
+				<h1>{t("home")}</h1>
+
+				<h2>
+					<center>
+						{t("hello", { firstName: getFirstName() })}&nbsp;👋
+						{/* <motion.span
+							animate={{ rotate: [0, 15, 0] }}
+							transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+							style={{ display: "inline-block" }}
+						>👋</motion.span> */}
+					</center>
+				</h2>
+
+			</Space>
 		</>
 	);
 }
-
-const styles = {
-	titre: {
-		textAlign: "center" as "center",
-		justifyContent: "center" as "center",
-	}
-};
-
-const waveStyle = `
-    .wave {
-        display: inline-block;
-        animation: wave-animation 0.5s infinite;
-    }
-
-    @keyframes wave-animation {
-        0% {
-            transform: rotate(0deg);
-        }
-        50% {
-            transform: rotate(15deg);
-        }
-        100% {
-            transform: rotate(0deg);
-        }
-    }
-`;
-
-document.head.insertAdjacentHTML("beforeend", `<style>${waveStyle}</style>`);

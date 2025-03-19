@@ -1,48 +1,60 @@
 import { Button, Space } from "antd-mobile";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useAppStore } from "../store";
-import { useTranslation } from "react-i18next"; // Import i18n
 
 export default function Profile() {
-	const { logout, user } = useAppStore();
-		const { t, i18n } = useTranslation(); // Traduction et changement de langue
+	const { logout, user, getEmail } = useAppStore();
+	const { t } = useTranslation();
+
 	return <>
-		<h1>Profile</h1>
+		<h1>{t("profile")}</h1>
+
 		<Space
 			direction="vertical"
-			block={true}
-			justify="center">
+			block>
 
 			<div>
 				<h2>👋 {user?.displayName}</h2>
-				<h4>{user?.email}</h4>
+				<h4>{getEmail()}</h4>
 			</div>
+
+			<br />
 
 			<Space
 				direction="vertical"
-				block={true}
-				justify="center">
-				<Link to="/personal-info" style={linkStyle}>
+				block>
+
+				<Link
+					to="/personal-info"
+					style={linkStyle}>
 					<Button
 						block
 						style={linkButtonStyle}>
-						{t("pinfo")}
+						{t("personal_info")}
 					</Button>
 				</Link>
-				<Link to="/marks" style={linkStyle}>
+
+				<Link
+					to="/marks"
+					style={linkStyle}>
 					<Button
 						block
 						style={linkButtonStyle}>
 						Marks
 					</Button>
 				</Link>
-				<Link to="/settings" style={linkStyle}>
+
+				<Link
+					to="/settings"
+					style={linkStyle}>
 					<Button
 						block
 						style={linkButtonStyle}>
 						{t("settings")}
 					</Button>
 				</Link>
+
 				<Button
 					block
 					fill="outline"
@@ -50,10 +62,16 @@ export default function Profile() {
 					onClick={logout}>
 					{t("logout")}
 				</Button>
+
 			</Space>
+
 		</Space>
 	</>;
 }
 
-const linkStyle = { textDecoration: 'none' };
-const linkButtonStyle = { '--background-color': 'var(--adm-color-border)' };
+const linkStyle = {
+	textDecoration: "none",
+};
+const linkButtonStyle = {
+	"--background-color": "var(--adm-color-border)",
+};

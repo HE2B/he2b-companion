@@ -1,103 +1,59 @@
-import { Card, Button, Space } from "antd-mobile";
+import { Button, Form, Input, Space } from "antd-mobile";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../store";
-import { useTranslation } from "react-i18next"; 
-import { useNavigate } from "react-router-dom"; 
-import { TbUserFilled, TbMail, TbIdBadge2 } from "react-icons/tb"; 
 
 export default function PersonalInfo() {
-	const { user } = useAppStore();
-	const { t } = useTranslation(); 
-	const navigate = useNavigate(); 
-
-	const firstName = user?.displayName?.split(" ")[0] || "";
-	const lastName = user?.displayName?.split(" ")[1] || "";
-	const email = user?.email || "";
-
-	const matricule = email.endsWith("@etu.he2b.be") ? email.split("@")[0] : "";
-	const profm = email.endsWith("@he2b.be") ? email.split("@")[0] : "";
-
-	const goToProfile = () => {
-		navigate("/profile");
-	};
+	const { isStudent, isTeacher, getFirstName, getLastName, getEmail, getStudentMatricule, getTeacherMatricule } = useAppStore();
+	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	return (
-		<Card style={styles.card}>
-			<h1 style={styles.title}>{t("pinfo")}</h1>
-			<Space direction="vertical" style={styles.container}>
-				<div style={styles.info}>
-					<TbUserFilled style={styles.icon} />
-					<strong>Prénom :</strong> {firstName}
-				</div>
+		<>
+			<Space
+				direction="vertical"
+				block>
 
-				<div style={styles.info}>
-					<TbUserFilled style={styles.icon} />
-					<strong>Nom :</strong> {lastName}
-				</div>
+				<h1>{t("personal_info")}</h1>
 
-				<div style={styles.info}>
-					<TbMail style={styles.icon} />
-					<strong>Email :</strong> {email}
-				</div>
+				<Form
+					layout="horizontal">
+					<Form.Item label={t("first_name")}>
+						<Input value={getFirstName()} readOnly />
+					</Form.Item>
 
-				{email.endsWith("@etu.he2b.be") && (
-					<div style={styles.info}>
-						<TbIdBadge2 style={styles.icon} />
-						<strong>Matricule :</strong> {matricule}
-					</div>
-				)}
+					<Form.Item label={t("last_name")}>
+						<Input value={getLastName()} readOnly />
+					</Form.Item>
 
-				{email.endsWith("@he2b.be") && (
-					<div style={styles.info}>
-						<TbIdBadge2 style={styles.icon} />
-						<strong>Nom de prof :</strong> {profm}
-					</div>
-				)}
+					<Form.Item label={t("email")}>
+						<Input value={getEmail()} readOnly />
+					</Form.Item>
 
-				<Button block color="primary" onClick={goToProfile} style={styles.button}>
+					{isStudent() && (
+						<Form.Item label={t("matricule")}>
+							<Input value={getStudentMatricule()} readOnly />
+						</Form.Item>
+					)}
+
+					{isTeacher() && (
+						<Form.Item label={t("teacher_matricule")}>
+							<Input value={getTeacherMatricule()} readOnly />
+						</Form.Item>
+					)}
+				</Form>
+
+				<br />
+				<br />
+
+				<Button
+					block
+					color="primary"
+					onClick={() => navigate("/profile")}>
 					{t("back")}
 				</Button>
+
 			</Space>
-		</Card>
+		</>
 	);
 }
-
-const styles = {
-	card: {
-		maxWidth: 400,
-		margin: "auto",
-		marginTop: 20,
-		padding: 20,
-		backgroundColor: 'transparent',
-		borderRadius: 10,
-	},
-	title: {
-		color: "#fff",
-		textAlign: "center" as "center",
-	},
-	container: {
-		display: "flex",
-		flexDirection: "column" as "column",
-		width: "100%",
-		gap: 12,
-	},
-	info: {
-		display: "flex",
-		alignItems: "center",
-		gap: 10,
-		fontSize: "1em",
-		color: "#444",
-		backgroundColor: "#fff",
-		padding: 12,
-		borderRadius: 8,
-		boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-	},
-	icon: {
-		color: "#007bff",
-		fontSize: "1.5em",
-	},
-	button: {
-		marginTop: 15,
-		width: "100%",
-		fontSize: 16,
-	},
-};
