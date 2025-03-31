@@ -16,7 +16,7 @@ const news = [
 ];
 
 // Mapping tag to a color
-const tagColors = {
+const tagColors: Record<string, string> = {
   "Absence": "#FF4D4F", // Rouge
   "CE": "#40A9FF", // Blue
   "SAR": "#7E4B8B", // Mauve
@@ -87,13 +87,13 @@ export default function News() {
 
 
         <PullToRefresh onRefresh={onRefresh}>
-          {groups.map(([date, newsGroup]) => (
+          {groups.map(([date, newsGroup, tag]) => (
             <List key={date}>
               <div style={{ padding: '10px', fontWeight: 'bold' }}>
-                {t('Actualité du: {{date}}', { date })}
+                {t('news')} : {date}
               </div>
-              {newsGroup.map((newsItem) => {
-                const tagColor = tagColors[newsItem.tag] || "#000000";
+
+              {newsGroup?.map((newsItem) => {
 
                 return (
                   <List.Item key={newsItem.id}>

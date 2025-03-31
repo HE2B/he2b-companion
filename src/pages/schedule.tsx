@@ -16,7 +16,7 @@ export default function Schedule() {
 	const today = new Date();
 
 	// Génération des 30 prochains jours
-	const joursAffiches = Array.from({ length: 30 }, (_, i) => {
+	const joursAffiches = Array.from({ length: 32 }, (_, i) => {
 		const date = new Date();
 		date.setDate(today.getDate() + i);
 		return {
