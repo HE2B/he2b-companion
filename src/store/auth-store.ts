@@ -6,6 +6,19 @@ import { StateCreator } from "zustand";
 import { firebaseConfig, scopes } from "../firebase-config";
 import { AppState } from "./index";
 
+/**
+ * https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow
+ * https://github.com/google/google-api-javascript-client
+ * https://developers.google.com/identity/sign-in/web/deprecation-and-sunset
+ * https://developers.google.com/identity/gsi/web/guides/overview
+ * https://developers.google.com/identity/oauth2/web/guides/overview
+ * https://www.npmjs.com/package/google-api-javascript-client
+ *
+ * https://developers.google.com/workspace/admin/directory/reference/rest
+ * https://console.cloud.google.com/iam-admin/groups?authuser=1
+ * https://cloud.google.com/identity/docs/how-to/query-memberships?authuser=1
+ */
+
 const firebaseApp = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();

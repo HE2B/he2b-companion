@@ -6,26 +6,28 @@ export default function Marks() {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
-	return <>
-		<Space
-			direction="vertical"
-			block>
+	return (
+		<>
+			<Space
+				direction="vertical"
+				block>
 
-			<h1>{t("marks")}</h1>
+				<h1>{t("marks")}</h1>
 
 
-			<ErrorBlock status="empty" />
+				<ErrorBlock status="empty" />
 
-			<br />
-			<br />
+				<br />
+				<br />
 
-			<Button
-				block
-				color="primary"
-				onClick={() => navigate("/profile")}>
-				{t("back")}
-			</Button>
+				<Button
+					block
+					color="primary"
+					onClick={() => navigate("/profile")}>
+					{t("back")}
+				</Button>
 
-		</Space>
-	</>;
+			</Space>
+		</>
+	);
 }

@@ -21,5 +21,7 @@
 	"sign_in_with_google": "Se connecter avec Google",
 	"teacher_matricule": "Matricule d'enseignant",
 	"theme": "Thème",
-	"NextCours": "Prochain cours"
+	"next_class": "Prochain cours",
+	"room": "Salle",
+	"no_class_on_that_day": "Aucun cours ce jour-là."
 }

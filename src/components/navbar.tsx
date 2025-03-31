@@ -41,17 +41,19 @@ export default function Navbar() {
 
 	const navigate = useNavigate();
 
-	return <>
-		<TabBar activeKey={location.pathname}>
-			{tabs.map(item => (
-				<TabBar.Item
-					icon={item.icon}
-					title={item.title}
-					key={item.path}
-					onClick={() => navigate(item.path)}
-					style={{ padding: 15 }}
-				/>
-			))}
-		</TabBar>
-	</>;
+	return (
+		<>
+			<TabBar activeKey={location.pathname}>
+				{tabs.map(item => (
+					<TabBar.Item
+						icon={item.icon}
+						title={item.title}
+						key={item.path}
+						onClick={() => navigate(item.path)}
+						style={{ padding: 15 }}
+					/>
+				))}
+			</TabBar>
+		</>
+	);
 }

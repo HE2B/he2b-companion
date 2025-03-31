@@ -10,27 +10,29 @@ export default function LoggedInLayout() {
 	}
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				height: "calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom))",
-				justifyContent: "space-between",
-				marginInline: "1rem",
-			}}
-		>
+		<>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					height: "calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom))",
+					justifyContent: "space-between",
+					marginInline: "1rem",
+				}}
+			>
 
-			<div style={{
-				overflowY: "auto",
-				flex: 1,
-				display: "flex",
-				flexDirection: "column",
-			}}>
-				<Outlet />
+				<div style={{
+					overflowY: "auto",
+					flex: 1,
+					display: "flex",
+					flexDirection: "column",
+				}}>
+					<Outlet />
+				</div>
+
+				<Navbar />
+
 			</div>
-
-			<Navbar />
-
-		</div>
+		</>
 	);
 }
