@@ -12,6 +12,7 @@
 	"dependencies": {
 		"antd-mobile": "^5.39.0",
 		"firebase": "^11.4.0",
+		"framer-motion": "^12.6.2",
 		"i18next": "^24.2.3",
 		"motion": "^12.5.0",
 		"react": "18",

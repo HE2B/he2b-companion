@@ -76,7 +76,6 @@ export default function News() {
         display: 'flex',
         alignItems: 'center',
         padding: '4px 12px',
-        color: tagColors[tag],
         borderRadius: '20px',
       }}>
         {tag}
@@ -113,14 +112,15 @@ export default function News() {
                       <div style={{
                         width: '5px',
                         height: '74%',
-                        backgroundColor: tagColor,
-						position: 'absolute',
+                        backgroundColor: "#40A9FF",
+						            position: 'absolute',
                         marginLeft: '-11px',
-						marginTop: '-12px',	
-						borderTopLeftRadius: '10px',
-						borderBottomLeftRadius: '10px',
-						overflow: 'hidden',
-                      }}></div>
+                        marginTop: '-12px',	
+                        borderTopLeftRadius: '10px',
+                        borderBottomLeftRadius: '10px',
+                        overflow: 'hidden',
+                      }}>
+                      </div>
 
                       <div style={{ flex: 1 }}>
                         <div style={{fontWeight: 'bold' }}>
