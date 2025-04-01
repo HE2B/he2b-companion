@@ -20,7 +20,7 @@ export default function Home() {
 						{t("hello", { firstName: getFirstName() })}
 						<motion.span
 							animate={{ rotate: [0, 30, 0] }}
-							transition={{ duration: 3, ease: "easeInOut" }}
+							transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
 							style={{ display: "inline-block" }}
 						>👋</motion.span>
 					</center>

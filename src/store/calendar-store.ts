@@ -14,9 +14,14 @@ export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> 
 		const { classes } = get();
 		const now = new Date();
 		return classes
+			.filter(c => {
+				const now = new Date();
+				return c.startTime.getFullYear() === now.getFullYear() && c.startTime.getMonth() === now.getMonth() && c.startTime.getDate() === now.getDate();
+			})
+			.filter(c => c.endTime >= now)
 			.reduce<Clazz | null>((p, c) => {
-				if(!p) return c;
-				return c.startTime > now && c.startTime < p.startTime ? c : p;
+				if(!p || c.startTime < p.startTime) return c;
+				return p;
 			}, null);
 	},
 	getClassesOfDay: (year: number, month: number, date: number) => {
@@ -50,8 +55,8 @@ const defaultClasses = [
 		teacherName: "Francis François",
 		teacherMatricule: "FFR",
 		room: "101",
-		startTime: new Date("2025-04-01T08:00:00.000+01:00"),
-		endTime: new Date("2025-04-01T10:00:00.000+01:00"),
+		startTime: new Date("2025-04-01T08:15:00.000+02:00"),
+		endTime: new Date("2025-04-01T10:15:00.000+02:00"),
 	},
 	{
 		id: "2",
@@ -60,8 +65,8 @@ const defaultClasses = [
 		teacherName: "Mathéo Mathieu",
 		teacherMatricule: "MMA",
 		room: "102",
-		startTime: new Date("2025-04-01T10:30:00.000+01:00"),
-		endTime: new Date("2025-04-01T12:00:00.000+01:00"),
+		startTime: new Date("2025-04-01T10:30:00.000+02:00"),
+		endTime: new Date("2025-04-01T12:30:00.000+02:00"),
 	},
 	{
 		id: "3",
@@ -70,8 +75,8 @@ const defaultClasses = [
 		teacherName: "Angus Angli",
 		teacherMatricule: "AAN",
 		room: "103",
-		startTime: new Date("2025-04-01T14:00:00.000+01:00"),
-		endTime: new Date("2025-04-01T16:00:00.000+01:00"),
+		startTime: new Date("2025-04-01T14:00:00.000+02:00"),
+		endTime: new Date("2025-04-01T15:45:00.000+02:00"),
 	},
 	{
 		id: "4",
@@ -80,8 +85,8 @@ const defaultClasses = [
 		teacherName: "Philibert Phyferoen",
 		teacherMatricule: "PPH",
 		room: "104",
-		startTime: new Date("2025-04-01T16:00:00.000+01:00"),
-		endTime: new Date("2025-04-01T18:30:00.000+01:00"),
+		startTime: new Date("2025-04-01T16:00:00.000+02:00"),
+		endTime: new Date("2025-04-01T18:00:00.000+02:00"),
 	},
 	{
 		id: "5",
@@ -90,8 +95,8 @@ const defaultClasses = [
 		teacherName: "Childéric Chilain",
 		teacherMatricule: "CCH",
 		room: "105",
-		startTime: new Date("2025-04-01T18:30:00.000+01:00"),
-		endTime: new Date("2025-04-01T19:30:00.000+01:00"),
+		startTime: new Date("2025-04-01T18:00:00.000+02:00"),
+		endTime: new Date("2025-04-01T20:00:00.000+02:00"),
 	},
 	{
 		id: "6",
@@ -100,7 +105,7 @@ const defaultClasses = [
 		teacherName: "Hissam Histram",
 		teacherMatricule: "HHI",
 		room: "201",
-		startTime: new Date("2025-04-01T14:00:00.000+01:00"),
-		endTime: new Date("2025-04-01T16:00:00.000+01:00"),
+		startTime: new Date("2025-04-02T14:00:00.000+02:00"),
+		endTime: new Date("2025-04-02T15:45:00.000+02:00"),
 	},
 ];

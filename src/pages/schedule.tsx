@@ -17,7 +17,6 @@ export default function Schedule() {
 
 	const displayDay = (date: Date) => new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(date);
 	const displayMonth = (date: Date) => new Intl.DateTimeFormat(undefined, { month: "short" }).format(date);
-	const displayDate = (date: Date) => new Intl.DateTimeFormat(undefined, { weekday: "long", day: "numeric", month: "long" }).format(date);
 
 	return (
 		<>
@@ -38,7 +37,7 @@ export default function Schedule() {
 							<div
 								key={date.getTime()}
 								style={{
-									padding: "10px",
+									padding: "5px",
 									background: isSameDay(date, selectedDate) ? "var(--adm-color-primary)" : "var(--adm-color-background)",
 									color: isSameDay(date, selectedDate) ? "#fff" : "var(--adm-color-text)",
 									borderRadius: "8px",
@@ -54,9 +53,9 @@ export default function Schedule() {
 								}}
 								onClick={() => setSelectedDate(date)}
 							>
-								<span><b>{displayDay(date)}</b></span>
-								<span style={{ fontSize: "18px" }}>{date.getDate()}</span>
-								<span>{displayMonth(date)}</span>
+								<span style={{ fontSize: "12px" }}><b>{displayDay(date)}</b></span>
+								<span style={{ fontSize: "15px" }}>{date.getDate()}</span>
+								<span style={{ fontSize: "12px" }}>{displayMonth(date)}</span>
 							</div>
 						))}
 					</div>
@@ -65,14 +64,12 @@ export default function Schedule() {
 						marginTop: "1rem",
 						display: "flex",
 						flexDirection: "column",
-						gap: "1rem",
+						gap: "0.5rem",
 					}}>
-						<h2>{displayDate(selectedDate)}</h2>
-
 						{!classesForDay.length && <p>❌ {t("no_class_on_that_day")}</p>}
 
 						{classesForDay
-							.map(classForDay => <ScheduledClass {...classForDay} />)}
+							.map(classForDay => <ScheduledClass {...classForDay} key={classForDay.id} />)}
 					</div>
 				</Space>
 			</ConfigProvider>

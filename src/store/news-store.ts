@@ -5,6 +5,7 @@ import { News, NewsType } from "../model/news";
 export interface NewsStore {
 	news: News[];
 	setNews: (news: News[]) => void;
+	allTags: string[];
 	tagFilters: string[];
 	setTagFilters: (tagFilters: string[]) => void;
 	toggleTagFilter: (tagFilter: string) => void;
@@ -16,6 +17,7 @@ export interface NewsStore {
 export const createNewsStore: StateCreator<AppState, [], [], NewsStore> = (set, get) => ({
 	news: defaultNews,
 	setNews: news => set({ news }),
+	allTags: defaultAllTags,
 	tagFilters: defaultTagFilters,
 	setTagFilters: tagFilters => set({ tagFilters }),
 	toggleTagFilter: tagFilter => {
@@ -122,6 +124,9 @@ const defaultNews: News[] = [
 		groupCode: "SAR-MAT2",
 	},
 ];
+
+const defaultAllTags = [...new Set(defaultNews.flatMap((item) => item.tags)).values()]
+	.sort();
 
 const defaultTagFilters: string[] = [];
 

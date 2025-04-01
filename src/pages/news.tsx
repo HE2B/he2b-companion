@@ -12,7 +12,7 @@ import { useAppStore } from "../store";
 
 export default function News() {
 	const { t } = useTranslation();
-	const { getFilteredNews, tagFilters } = useAppStore();
+	const { getFilteredNews, allTags } = useAppStore();
 
 	const grouped = Object.groupBy(getFilteredNews(), (news) => news.date.toLocaleDateString());
 	const groups = Object.entries(grouped);
@@ -44,10 +44,12 @@ export default function News() {
 						'--checked-border': 'solid var(--adm-color-primary) 1px',
 						'--padding': '4px 12px',
 						fontSize: '0.75rem',
+						overflowX: "auto",
+						display: "flex",
 					}}
 					showCheckMark={false}
 					multiple={true}
-					options={tagFilters.map((tag) => ({
+					options={allTags.map((tag) => ({
 						label: (
 							<div
 								key={tag}
