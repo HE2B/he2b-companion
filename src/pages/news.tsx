@@ -75,8 +75,8 @@ export default function News() {
 								cursor: 'pointer',
 								fontSize: '0.75rem',
 								border: tagFilters.includes(tag) 
-									? `solid ${tagColors[tag]} 2.5px`
-									: 'solid transparent 1px',
+									? `solid white 2px`
+									: 'solid transparent 2px',
 							}}
 							onClick={() => toggleTagFilter(tag)}
 						>

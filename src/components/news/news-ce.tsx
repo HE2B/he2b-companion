@@ -21,7 +21,7 @@ export default function NewsCe({ news }: NewsCeProps) {
 			}}>
 			<div style={{ flex: 1,padding:"10px" }}>
 				<p style={{fontSize: 9, color: "gray"}}>{news.tags[0].toUpperCase()}</p>
-				<b>{news.title}</b>
+                <b style={{borderTop: "1px solid gray", paddingTop: "8px"}}>{news.title}</b>
 				<br />
 				<i>{news.description}</i>
 			</div>
