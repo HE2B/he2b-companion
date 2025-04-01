@@ -50,8 +50,8 @@ const defaultClasses = [
 		teacherName: "Francis François",
 		teacherMatricule: "FFR",
 		room: "101",
-		startTime: new Date("2025-04-01T08:00:00.000+01:00"),
-		endTime: new Date("2025-04-01T10:00:00.000+01:00"),
+		startTime: new Date("2025-04-01T08:15:00.000"),
+		endTime: new Date("2025-04-01T10:15:00.000"),
 	},
 	{
 		id: "2",
@@ -60,8 +60,8 @@ const defaultClasses = [
 		teacherName: "Mathéo Mathieu",
 		teacherMatricule: "MMA",
 		room: "102",
-		startTime: new Date("2025-04-01T10:30:00.000+01:00"),
-		endTime: new Date("2025-04-01T12:00:00.000+01:00"),
+		startTime: new Date("2025-04-01T10:30:00.000"),
+		endTime: new Date("2025-04-01T12:30:00.000"),
 	},
 	{
 		id: "3",
@@ -100,7 +100,7 @@ const defaultClasses = [
 		teacherName: "Hissam Histram",
 		teacherMatricule: "HHI",
 		room: "201",
-		startTime: new Date("2025-04-01T14:00:00.000+01:00"),
-		endTime: new Date("2025-04-01T16:00:00.000+01:00"),
+		startTime: new Date("2025-04-02T14:00:00.000+01:00"),
+		endTime: new Date("2025-04-02T16:00:00.000+01:00"),
 	},
 ];

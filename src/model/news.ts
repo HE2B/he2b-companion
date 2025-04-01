@@ -1,3 +1,7 @@
+import { ReactNode } from "react";
+
+export type ReactI18NextChildren = ReactNode;
+
 export interface BaseNews {
 	id: string;
 	date: Date;
@@ -5,6 +9,8 @@ export interface BaseNews {
 }
 
 export interface AbsenceNews extends BaseNews {
+	description: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
+	title: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
 	type: "absence";
 
 	teacherName: string;
@@ -34,6 +40,8 @@ export interface SarNews extends BaseNews {
 }
 
 export interface MarksNews extends BaseNews {
+	description: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
+	title: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
 	type: "marks";
 
 	className: string;
@@ -56,13 +64,22 @@ export interface OtherNews extends BaseNews {
 	image?: string;
 }
 
+export interface SportNews extends BaseNews {
+	type: "sport";
+
+	title: string;
+	description?: string;
+	image?: string;
+}
+
 export type News =
 	| AbsenceNews
 	| CeNews
 	| SarNews
 	| MarksNews
 	| CommunicationNews
-	| OtherNews;
+	| OtherNews
+	| SportNews;
 
 export enum NewsType {
 	ABSENCE = "absence",
@@ -71,4 +88,5 @@ export enum NewsType {
 	MARKS = "marks",
 	COMMUNICATION = "communication",
 	OTHER = "other",
+	SPORT = "sport",
 }

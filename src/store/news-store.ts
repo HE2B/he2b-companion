@@ -1,4 +1,4 @@
-import { StateCreator } from "zustand";
+import { StateCreator, create } from "zustand";
 import { AppState } from ".";
 import { News, NewsType } from "../model/news";
 
@@ -12,6 +12,7 @@ export interface NewsStore {
 	tagColors: Record<NewsType | string, string>;
 	getTagsColor: (tag: (NewsType | string)[]) => string;
 }
+
 
 export const createNewsStore: StateCreator<AppState, [], [], NewsStore> = (set, get) => ({
 	news: defaultNews,
@@ -39,6 +40,7 @@ export const createNewsStore: StateCreator<AppState, [], [], NewsStore> = (set, 
 	},
 });
 
+
 const defaultNews: News[] = [
 	{
 		type: "absence",
@@ -53,6 +55,8 @@ const defaultNews: News[] = [
 		classStartTime: new Date("2021-09-01T08:00:00"),
 		classEndTime: new Date("2021-09-01T10:00:00"),
 		groupCode: "SAR-MAT2",
+		title: "Absence de Monsieur ABE",
+		description: "Monsieur ABE sera absent ce jeudi 1er septembre. Le cours de SAR-MAT2 de 8h est donc annulé et reporté à une date ultérieure.",
 	},
 	{
 		type: "ce",
@@ -76,6 +80,7 @@ const defaultNews: News[] = [
 		date: new Date("2021-02-06"),
 		tags: [NewsType.ABSENCE, NewsType.SAR, "esi", "mat2"],
 		title: "Absence XYZ",
+		teacherMonogram: "xyz",
 		description: "M. XYZ sera absent ce jeudi 6 février. Le cours de SAR-MAT2 de 16h est donc annulé et reporté à une date ultérieure.",
 	},
 	{
@@ -85,6 +90,8 @@ const defaultNews: News[] = [
 		tags: [NewsType.MARKS],
 		className: "SAR-MAT2",
 		classCode: "SAR-MAT2",
+		title: "Résultats de la session",
+		description: "Les résultats de la session de janvier 2021 sont disponibles sur le site de la HE2B. Vous pouvez consulter vos résultats en vous connectant à votre compte étudiant.",
 	},
 	{
 		type: "communication",
@@ -101,10 +108,10 @@ const defaultNews: News[] = [
 		title: "Autres informations",
 	},
 	{
-		type: "other",
+		type: "sport",
 		id: "8",
 		date: new Date("2022-09-04"),
-		tags: ["sport"],
+		tags: [NewsType.SPORT],
 		title: "Journée sportive",
 	},
 	{
@@ -120,6 +127,8 @@ const defaultNews: News[] = [
 		classStartTime: new Date("2023-05-24T08:00:00"),
 		classEndTime: new Date("2023-05-24T10:00:00"),
 		groupCode: "SAR-MAT2",
+		title: "Absence de Monsieur ABE",
+		description: "Monsieur ABE sera absent ce jeudi 24 mai. Le cours de SAR-MAT2 de 8h est donc annulé et reporté à une date ultérieure.",
 	},
 ];
 
@@ -132,4 +141,10 @@ const defaultTagColors: Record<NewsType | string, string> = {
 	[NewsType.MARKS]: "#FFD700",
 	[NewsType.COMMUNICATION]: "#28A745",
 	[NewsType.OTHER]: "#8E8E8E",
+	[NewsType.SPORT]: "#FF8C00",
 };
+
+export const useAppStore = create((set) => ({
+    selectedTags: [],
+    setSelectedTags: (tags: any) => set({ selectedTags: tags }),
+}));

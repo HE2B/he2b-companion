@@ -4,6 +4,7 @@ import { useAppStore } from "../../store";
 
 export default function NewsOther({ news }: NewsOtherProps) {
 	const { getTagsColor } = useAppStore();
+	var tag = news.tags[0].toUpperCase();
 
 	return (
 		<>
@@ -17,21 +18,12 @@ export default function NewsOther({ news }: NewsOtherProps) {
 					backgroundColor: 'var(--adm-background-color)',
 					color: 'var(--adm-text-color)',
 					overflow: 'hidden',
+					borderLeft: `10px solid ${getTagsColor(news.tags)}`,
 				}}
 			>
-				<div style={{
-					width: '5px',
-					height: '74%',
-					backgroundColor: getTagsColor(news.tags),
-					position: 'absolute',
-					marginLeft: '-11px',
-					marginTop: '-12px',
-					borderTopLeftRadius: '10px',
-					borderBottomLeftRadius: '10px',
-					overflow: 'hidden',
-				}} />
 
-				<div style={{ flex: 1 }}>
+				<div style={{ flex: 1,padding:"10px" }}>
+				<p style={{fontSize: 9, color: "gray"}}>{tag}</p>
 					<b>{news.title}</b>
 					<br />
 					<i>{news.description}</i>
