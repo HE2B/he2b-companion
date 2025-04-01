@@ -67,7 +67,7 @@ export default function News() {
 							className={`tag-item ${tagFilters.includes(tag) ? 'selected' : ''}`}
 							style={{
 								backgroundColor: tagColors[tag],
-								color: ['#FF4D4F', '#FFD700', '#FF8C00'].includes(tagColors[tag]) ? '#000' : '#fff',
+								color: '#000',
 								padding: '4px 12px',
 								borderRadius: '100px',
 								margin: '0 4px 8px 0',
@@ -75,7 +75,7 @@ export default function News() {
 								cursor: 'pointer',
 								fontSize: '0.75rem',
 								border: tagFilters.includes(tag) 
-									? 'solid var(--adm-color-primary) 1px' 
+									? `solid ${tagColors[tag]} 2.5px`
 									: 'solid transparent 1px',
 							}}
 							onClick={() => toggleTagFilter(tag)}
