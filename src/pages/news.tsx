@@ -13,7 +13,11 @@ import { useAppStore } from "../store";
 
 export default function News() {
 	const { t } = useTranslation();
+<<<<<<< HEAD
 	const { getFilteredNews, tagFilters, toggleTagFilter, tagColors } = useAppStore();
+=======
+	const { getFilteredNews, allTags } = useAppStore();
+>>>>>>> 73e8be6c56dde6cfe40efd6ff5a5edc60859b342
 
 	const grouped = Object.groupBy(getFilteredNews(), (news) => news.date.toLocaleDateString());
 	const groups = Object.entries(grouped);
@@ -60,6 +64,7 @@ export default function News() {
 			<Space direction="vertical" block>
 				<h1>{t("news")}</h1>
 
+<<<<<<< HEAD
 				<div className="tag-selector-container">
 					{availableTags.map((tag) => (
 						<div 
@@ -84,6 +89,36 @@ export default function News() {
 						</div>
 					))}
 				</div>
+=======
+				<Selector
+					style={{
+						'--border-radius': '100px',
+						'--border': 'solid transparent 1px',
+						'--checked-border': 'solid var(--adm-color-primary) 1px',
+						'--padding': '4px 12px',
+						fontSize: '0.75rem',
+						overflowX: "auto",
+						display: "flex",
+					}}
+					showCheckMark={false}
+					multiple={true}
+					options={allTags.map((tag) => ({
+						label: (
+							<div
+								key={tag}
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									padding: '4px 12px',
+									borderRadius: '20px',
+								}}>
+								{tag}
+							</div>
+						),
+						value: tag
+					}))}
+				/>
+>>>>>>> 73e8be6c56dde6cfe40efd6ff5a5edc60859b342
 
 				<PullToRefresh onRefresh={onRefresh}>
 					{groups.map(([date, newsGroup]) => (

@@ -16,7 +16,7 @@ export default function Profile() {
 				block>
 
 				<div>
-					<h2>👋 {user?.displayName}</h2>
+					<h2>{user?.displayName}</h2>
 					<h4>{getEmail()}</h4>
 				</div>
 
