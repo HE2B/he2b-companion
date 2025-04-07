@@ -36,6 +36,26 @@ export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> 
 	},
 });
 
+const getClassColor = (classCode: string): string => {
+	switch (classCode) {
+		case "FRA":
+			return "#D72638";
+		case "MATH":
+			return "#3A0CA3";
+		case "PHY":
+			return "#4361EE";
+		case "CHI":
+			return "#2EC4B6";
+		case "HIS":
+			return "#F4A261";
+		case "GEO":
+			return "#2E8B57";
+		default:
+			return "#CCCCCC"; // gris par défaut
+	}
+};
+
+
 export interface Clazz {
 	id: string;
 	className: string;
@@ -99,4 +119,44 @@ const defaultClasses = [
 		startTime: new Date("2025-04-02T14:00:00.000+01:00"),
 		endTime: new Date("2025-04-02T16:00:00.000+01:00"),
 	},
+	{
+		id: "7",
+		className: "Géographie",
+		classCode: "GEO",
+		teacherName: "Georges Geoghegan",
+		teacherMatricule: "GGE",
+		room: "202",
+		startTime: new Date("2025-04-07T08:00"),
+		endTime: new Date("2025-04-07T10:00"),
+	},
+	{
+		id: "8",
+		className: "Français",
+		classCode: "FRA",
+		teacherName: "Jhon Doe",
+		teacherMatricule: "JDO",
+		room: "005",
+		startTime: new Date("2025-04-07T10:00"),
+		endTime: new Date("2025-04-07T12:00"),
+	},
+	{
+		id: "9",
+		className: "Maths",
+		classCode: "MATH",
+		teacherName: "Jhon Doe",
+		teacherMatricule: "JDO",
+		room: "A32",
+		startTime: new Date("2025-04-07T13:00"),
+		endTime: new Date("2025-04-07T15:00"),
+	},
+	{
+		id: "10",
+		className: "congé",
+		classCode: "conge",
+		teacherName: null,
+		teacherMatricule: null,
+		room: null,
+		startTime: new Date("2025-04-28T00:00"),
+		endTime: new Date("2025-05-02T23:59:59"),
+	}
 ]

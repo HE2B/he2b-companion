@@ -3,33 +3,45 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import ScheduledClass from "../components/scheduled-class";
 import { useAppStore } from "../store";
+import { getClassColor } from "./schedule"; // Assurez-vous que cette fonction est exportée depuis utils/class-color.ts
 
 export default function Home() {
-	const { t } = useTranslation();
-	const { getFirstName, getNextClass } = useAppStore();
+  const { t } = useTranslation();
+  const { getFirstName, getNextClass } = useAppStore();
 
-	const nextClass = getNextClass();
+  const nextClass = getNextClass();
 
-	return (
-		<>
-			<Space direction="vertical" block>
-				<h1>{t("home")}</h1>
+  const isClassActive = nextClass && nextClass.startTime <= new Date() && nextClass.endTime >= new Date();
 
-				<h2>
-					<center>
-						{t("hello", { firstName: getFirstName() })}
-						<motion.span
-							animate={{ rotate: [0, 30, 0] }}
-							transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
-							style={{ display: "inline-block" }}
-						>👋</motion.span>
-					</center>
-				</h2>
+  return (
+    <>
+      <Space direction="vertical" block>
+        <h1>{t("home")}</h1>
 
-				<h1>{t("next_class")} :</h1>
-				{!nextClass && <p>✅ Aucun cours à venir.</p>}
-				{nextClass && <ScheduledClass {...nextClass} />}
-			</Space>
-		</>
-	);
+        <h2>
+          <center>
+            {t("hello", { firstName: getFirstName() })}
+            <motion.span
+              animate={{ rotate: [0, 30, 0] }}
+              transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
+              style={{ display: "inline-block" }}
+            >
+              👋
+            </motion.span>
+          </center>
+        </h2>
+
+        <h1>{t("next_class")} :</h1>
+        {!nextClass && <p>✅ Aucun cours à venir.</p>}
+        {nextClass && (
+          <ScheduledClass
+            {...nextClass}
+            style={{
+              borderLeft: `5px solid ${getClassColor(nextClass.classCode, isClassActive)}`, // Utiliser isClassActive pour la couleur
+            }}
+          />
+        )}
+      </Space>
+    </>
+  );
 }
