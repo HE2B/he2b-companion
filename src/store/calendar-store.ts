@@ -7,8 +7,9 @@ export interface CalendarStore {
   classes: Clazz[];
   loadBaseClasses: () => Promise<void>;
   getNextClass: () => Clazz | null;
+  getCurrentClass: () => Clazz | null;
   getClassesOfDay: (year: number, month: number, date: number) => Clazz[];
-  getNext30Days: () => Date[];
+  getNext7Days: () => Date[];
 }
 
 export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> = (set, get) => ({
@@ -40,32 +41,53 @@ export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> 
     set({ classes: loaded });
   },
 
+  // Récupérer le prochain cours, qui commence après l'heure actuelle du jour
   getNextClass: () => {
     const { classes } = get();
     const now = new Date();
+
     return classes
       .filter(c =>
         c.startTime.getFullYear() === now.getFullYear() &&
         c.startTime.getMonth() === now.getMonth() &&
-        c.startTime.getDate() === now.getDate()
+        c.startTime.getDate() === now.getDate() &&
+        c.startTime > now // Ajouter la condition pour vérifier que le cours commence après maintenant
       )
-      .filter(c => c.endTime >= now)
       .reduce<Clazz | null>((p, c) => (!p || c.startTime < p.startTime ? c : p), null);
   },
 
+  // Récupérer le cours actuel en cours
+  getCurrentClass: () => {
+    const { classes } = get(); // Récupérer la liste des cours
+    const now = new Date(); // Heure actuelle
+
+    return classes
+      .filter(c =>
+        // Vérifier que le cours est dans la même journée que la date actuelle
+        c.startTime.getFullYear() === now.getFullYear() &&
+        c.startTime.getMonth() === now.getMonth() &&
+        c.startTime.getDate() === now.getDate()
+      )
+      .filter(c => now >= c.startTime && now <= c.endTime) // Le cours est en cours
+      .reduce<Clazz | null>((p, c) => (!p || c.startTime < p.startTime ? c : p), null); // Retourner le cours en cours
+  },
+
+  // Récupérer les cours du jour (vérifier le mois et la date)
   getClassesOfDay: (year, month, date) => {
     const { classes } = get();
+
     return classes
       .filter(c =>
         c.startTime.getFullYear() === year &&
-        c.startTime.getMonth() === month &&
+        c.startTime.getMonth() === month - 1 && // Correction pour le mois, JS indexe de 0 à 11
         c.startTime.getDate() === date
       )
-      .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
+      .sort((a, b) => a.startTime.getTime() - b.startTime.getTime()); // Trier par heure de début
   },
 
-  getNext30Days: () => {
+  // Retourner les dates des 7 prochains jours
+  getNext7Days: () => {
     const today = new Date();
-    return Array.from({ length: 30 }, (_, i) => new Date(today.getTime() + i * 86400000));
+    return Array.from({ length: 7 }, (_, i) => new Date(today.getTime() + i * 86400000));
   },
 });

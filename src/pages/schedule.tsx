@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { seedCalendar } from "../script/SeedCalendar";
-import { ConfigProvider, Space } from "antd-mobile";
-import { useTranslation } from "react-i18next";
-import ScheduledClass from "../components/scheduled-class";
-import { useAppStore } from "../store";
+import { useEffect, useState } from "react";   // React
+import { seedCalendar } from "../script/SeedCalendar";  // Vérifiez que le chemin est correct
+import { ConfigProvider, Space } from "antd-mobile";   // Assurez-vous que 'antd-mobile' est installé
+import { useTranslation } from "react-i18next";   // Assurez-vous que 'react-i18next' est installé
+import ScheduledClass from "../components/scheduled-class"; // Vérifiez le chemin de ce composant
+import { useAppStore } from "../store"; // Vérifiez que le chemin est correct
 
 // Fonction pour obtenir la couleur associée au classCode
 export const getClassColor = (classCode: string, isActive: boolean): string => {
@@ -35,19 +35,17 @@ export const getClassColor = (classCode: string, isActive: boolean): string => {
   }
 };
 
-loadBaseClasses: async () => {
+// Ensure this function is defined inside the appropriate store or context
+const loadBaseClasses = async () => {
   const snapshot = await getDocs(collection(db, "base_calendar"));
   const loaded = snapshot.docs.map(doc => {
     const data = doc.data();
-
-    // Vérifie si startTime et endTime existent avant de les convertir
     const startTime = data.startTime ? data.startTime.toDate() : null;
     const endTime = data.endTime ? data.endTime.toDate() : null;
 
-    // Si startTime ou endTime est manquant, log l'erreur et continue avec les autres
     if (!startTime || !endTime) {
       console.error(`Document avec ID ${doc.id} a des champs de temps invalides.`);
-      return null; // Retourne null pour les documents invalides
+      return null;
     }
 
     return {
@@ -56,31 +54,33 @@ loadBaseClasses: async () => {
       startTime,
       endTime,
     } as Clazz;
-  }).filter(clazz => clazz !== null); // Filtre les documents invalides
+  }).filter(clazz => clazz !== null);
 
+  console.log(loaded); // Ajoutez ceci pour vérifier les données
   set({ classes: loaded });
-}
+};
+
 
 
 export default function SeedAndSchedulePage() {
-  // Injection des données au chargement
+
   useEffect(() => {
     seedCalendar();
   }, []);
 
   const { t } = useTranslation();
-  const { getNext30Days, getClassesOfDay, loadBaseClasses } = useAppStore();
+  const { getNext7Days, getClassesOfDay, loadBaseClasses } = useAppStore();
 
   // On charge les classes depuis Firebase
   useEffect(() => {
     loadBaseClasses();
   }, [loadBaseClasses]);
 
-  const next30Days = getNext30Days();
+  const next30Days = getNext7Days();
   const [selectedDate, setSelectedDate] = useState(next30Days[0]);
 
   // On récupère les classes pour la date sélectionnée
-  const classesForDay = getClassesOfDay(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+  const classesForDay = getClassesOfDay(selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate()); // Mois ajusté (JS commence à compter les mois de 0)
 
   const isSameDay = (a: Date, b: Date) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 
@@ -120,6 +120,7 @@ export default function SeedAndSchedulePage() {
                 alignItems: "center",
                 fontSize: "1rem",
                 border: "1px solid var(--adm-color-border)",
+                justifyContent: "center",
               }}
               onClick={() => setSelectedDate(date)}
             >

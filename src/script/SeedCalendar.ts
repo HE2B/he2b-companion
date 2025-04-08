@@ -1,8 +1,9 @@
 // src/scripts/seedCalendar.ts
-import { collection, setDoc, doc } from "firebase/firestore";
+import { collection, setDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase-config";
 
-const defaultClasses = [
+// Nouveau tableau de cours à partir d'aujourd'hui
+const newClasses = [
   {
     id: "1",
     className: "Français",
@@ -10,8 +11,8 @@ const defaultClasses = [
     teacherName: "Francis François",
     teacherMatricule: "FFR",
     room: "101",
-    startTime: new Date("2025-04-01T08:15:00.000+02:00"),
-    endTime: new Date("2025-04-01T10:15:00.000+02:00"),
+    startTime: new Date("2025-04-08T08:15"),
+    endTime: new Date("2025-04-08T10:15"),
   },
   {
     id: "2",
@@ -20,120 +21,141 @@ const defaultClasses = [
     teacherName: "Mathéo Mathieu",
     teacherMatricule: "MMA",
     room: "102",
-    startTime: new Date("2025-04-01T10:30:00.000"),
-    endTime: new Date("2025-04-01T12:30:00.000"),
+    startTime: new Date("2025-04-08T10:30"),
+    endTime: new Date("2025-04-08T12:30"),
   },
   {
-    id: "4",
+    id: "3",
     className: "Physique",
     classCode: "PHY",
     teacherName: "Philibert Phyferoen",
     teacherMatricule: "PPH",
     room: "104",
-    startTime: new Date("2025-04-01T16:00:00.000+02:00"),
-    endTime: new Date("2025-04-01T18:00:00.000+02:00"),
+    startTime: new Date("2025-04-08T13:45"),
+    endTime: new Date("2025-04-08T15:45"),
   },
   {
-    id: "5",
+    id: "4",
     className: "Chimie",
     classCode: "CHI",
     teacherName: "Childéric Chilain",
     teacherMatricule: "CCH",
     room: "105",
-    startTime: new Date("2025-04-01T18:00:00.000+02:00"),
-    endTime: new Date("2025-04-01T20:00:00.000+02:00"),
+    startTime: new Date("2025-04-08T16:00"),
+    endTime: new Date("2025-04-08T18:00"),
   },
   {
-    id: "6",
+    id: "5",
     className: "Histoire",
     classCode: "HIS",
     teacherName: "Hissam Histram",
     teacherMatricule: "HHI",
     room: "201",
-    startTime: new Date("2025-04-02T14:00:00.000+01:00"),
-    endTime: new Date("2025-04-02T16:00:00.000+01:00"),
+    startTime: new Date("2025-04-09T14:00"),
+    endTime: new Date("2025-04-09T16:00"),
   },
   {
-    id: "7",
+    id: "6",
     className: "Géographie",
     classCode: "GEO",
     teacherName: "Georges Geoghegan",
     teacherMatricule: "GGE",
     room: "202",
-    startTime: new Date("2025-04-07T08:00"),
-    endTime: new Date("2025-04-07T10:00"),
+    startTime: new Date("2025-04-09T08:00"),
+    endTime: new Date("2025-04-09T10:00"),
   },
   {
-    id: "8",
+    id: "7",
     className: "Français",
     classCode: "FRA",
     teacherName: "Jhon Doe",
     teacherMatricule: "JDO",
     room: "005",
-    startTime: new Date("2025-04-07T10:00"),
-    endTime: new Date("2025-04-07T12:00"),
+    startTime: new Date("2025-04-09T10:00"),
+    endTime: new Date("2025-04-09T12:00"),
   },
   {
-    id: "9",
+    id: "8",
     className: "Maths",
     classCode: "MATH",
     teacherName: "Jhon Doe",
     teacherMatricule: "JDO",
     room: "A32",
-    startTime: new Date("2025-04-07T13:00"),
-    endTime: new Date("2025-04-07T15:00"),
+    startTime: new Date("2025-04-09T13:00"),
+    endTime: new Date("2025-04-09T15:00"),
   },
   {
-    id: "10",
-    className: "congé",
-    classCode: "conge",
-    teacherName: null,
-    teacherMatricule: null,
-    room: null,
-    startTime: new Date("2025-04-28T00:00"),
-    endTime: new Date("2025-05-02T23:59:59"),
-  },
-  {
-    id: "11",
+    id: "9",
     className: "Biologie",
     classCode: "BIO",
     teacherName: "Benoît Biot",
     teacherMatricule: "BBI",
     room: "301",
-    startTime: new Date("2025-04-08T08:30"),
-    endTime: new Date("2025-04-08T10:30"),
+    startTime: new Date("2025-04-10T08:30"),
+    endTime: new Date("2025-04-10T10:30"),
   },
   {
-    id: "12",
+    id: "10",
     className: "Informatique",
     classCode: "CS",
     teacherName: "Ingrid Informatique",
     teacherMatricule: "IIN",
     room: "303",
-    startTime: new Date("2025-04-08T10:00"),
-    endTime: new Date("2025-04-08T12:00"),
+    startTime: new Date("2025-04-10T10:00"),
+    endTime: new Date("2025-04-10T12:00"),
   },
   {
-    id: "13",
+    id: "11",
     className: "Éducation Physique et Sportive",
     classCode: "PE",
     teacherName: "Pierre Éducateur",
     teacherMatricule: "PED",
     room: null,
-    startTime: new Date("2025-04-08T14:00"),
-    endTime: new Date("2025-04-08T16:00"),
+    startTime: new Date("2025-04-10T14:00"),
+    endTime: new Date("2025-04-10T16:00"),
   },
 ];
 
 export const seedCalendar = async () => {
-  const promises = defaultClasses.map((clazz) =>
-    setDoc(doc(collection(db, "base_calendar"), clazz.id), {
-      ...clazz,
-      startTime: clazz.startTime,
-      endTime: clazz.endTime,
-    })
-  );
+  const querySnapshot = await getDocs(collection(db, "base_calendar"));
+  const existingClasses = querySnapshot.docs.map((doc) => doc.data());
 
-  await Promise.all(promises);
-  console.log("✅ Base calendar seeded!");
+  // Comparaison des nouveaux cours avec les existants
+  const classesToAdd = newClasses.filter((newClass) => {
+    const existingClass = existingClasses.find(
+      (existing) => existing.id === newClass.id
+    );
+
+    // Si la classe n'existe pas ou si les horaires ont changé, on l'ajoute
+    if (!existingClass) return true;
+    
+    // Convertir les timestamps Firebase en Date
+    const existingStartTime = existingClass.startTime.toDate();
+    const existingEndTime = existingClass.endTime.toDate();
+
+    if (
+      existingStartTime.toISOString() !== newClass.startTime.toISOString() ||
+      existingEndTime.toISOString() !== newClass.endTime.toISOString()
+    ) {
+      return true;
+    }
+
+    return false;
+  });
+
+  // Si des cours doivent être ajoutés
+  if (classesToAdd.length > 0) {
+    const promises = classesToAdd.map((clazz) =>
+      setDoc(doc(collection(db, "base_calendar"), clazz.id), {
+        ...clazz,
+        startTime: clazz.startTime,
+        endTime: clazz.endTime,
+      })
+    );
+
+    await Promise.all(promises);
+    console.log("✅ Nouveau calendrier semé avec succès!");
+  } else {
+    console.log("Aucun changement à apporter. Les cours sont déjà à jour.");
+  }
 };
