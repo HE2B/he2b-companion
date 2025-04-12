@@ -1,10 +1,9 @@
 import { Card } from "antd-mobile";
-import { OtherNews } from "../../model/news";
+import { NewsType, OtherNews } from "../../model/news";
 import { useAppStore } from "../../store";
 
 export default function NewsOther({ news }: NewsOtherProps) {
 	const { getTagsColor } = useAppStore();
-	var tag = news.tags[0].toUpperCase();
 
 	return (
 		<>
@@ -21,10 +20,9 @@ export default function NewsOther({ news }: NewsOtherProps) {
 					borderLeft: `10px solid ${getTagsColor(news.tags)}`,
 				}}
 			>
-
-				<div style={{ flex: 1,padding:"10px" }}>
-				<p style={{fontSize: 9, color: "gray"}}>{tag}</p>
-                <b style={{borderTop: "1px solid gray", paddingTop: "8px"}}>{news.title}</b>
+				<div style={{ flex: 1, padding: "10px" }}>
+					<p style={{ fontSize: 9, color: "gray" }}>{NewsType.OTHER.toUpperCase()}</p>
+					<b style={{ borderTop: "1px solid gray", paddingTop: "8px" }}>{news.title}</b>
 					<br />
 					<i>{news.description}</i>
 				</div>

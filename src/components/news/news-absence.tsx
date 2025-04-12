@@ -1,13 +1,13 @@
-import { AbsenceNews } from "../../model/news";
 import { Card } from "antd-mobile";
+import { AbsenceNews, NewsType } from "../../model/news";
 import { useAppStore } from "../../store";
 
 export default function NewsAbsence({ news }: NewsAbsenceProps) {
 	const { getTagsColor } = useAppStore();
-	var tag = news.tags[0].toUpperCase();
+
 	return (
 		<>
-		<Card style={{
+			<Card style={{
 				display: 'flex',
 				flexDirection: 'row',
 				borderRadius: '10px',
@@ -18,13 +18,13 @@ export default function NewsAbsence({ news }: NewsAbsenceProps) {
 				overflow: 'hidden !important',
 				borderLeft: `10px solid ${getTagsColor(news.tags)}`,
 			}}>
-			<div style={{ flex: 1,padding:"10px" }}>
-				<p style={{fontSize: 9, color: "gray"}}>{news.tags[0].toUpperCase()}</p>
-                <b style={{borderTop: "1px solid gray", paddingTop: "8px"}}>{news.title}</b>
-				<br />
-				<i>{news.description}</i>
-			</div>
-		</Card>
+				<div style={{ flex: 1, padding: "10px" }}>
+					<p style={{ fontSize: 9, color: "gray" }}>{NewsType.ABSENCE.toUpperCase()}</p>
+					<b style={{ borderTop: "1px solid gray", paddingTop: "8px" }}>{news.title}</b>
+					<br />
+					<i>{news.description}</i>
+				</div>
+			</Card>
 		</>
 	);
 }

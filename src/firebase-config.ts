@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 
 export const firebaseConfig = {
 	apiKey: "AIzaSyBP526UpH95uiPIJ3fPI7oNFP3zdTgOOAo",
@@ -15,6 +14,4 @@ export const scopes = [
 	"https://www.googleapis.com/auth/cloud-identity.groups",
 ];
 
-const app = initializeApp(firebaseConfig);
-
-export const db = getFirestore(app);
+export const firebaseApp = initializeApp(firebaseConfig);

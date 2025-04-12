@@ -1,6 +1,6 @@
 import { News, NewsType } from "../model/news";
 
-const defaultNews: News[] = [
+export const defaultNews: News[] = [
 	{
 		type: "absence",
 		id: "1",
@@ -37,6 +37,7 @@ const defaultNews: News[] = [
 		type: "absence",
 		id: "4",
 		date: new Date("2021-02-06"),
+		// @ts-ignore
 		tags: [NewsType.ABSENCE, NewsType.SAR, "esi", "mat2"],
 		title: "Absence XYZ",
 		teacherMonogram: "xyz",
@@ -57,14 +58,14 @@ const defaultNews: News[] = [
 		id: "6",
 		date: new Date("2021-09-03"),
 		tags: [NewsType.COMMUNICATION],
-		title: "communication administratif",
+		title: "Communication administrative",
 	},
 	{
 		type: "other",
 		id: "7",
 		date: new Date("2021-09-04"),
 		tags: [NewsType.OTHER],
-		title: "Autres informations",
+		title: "Autre information",
 	},
 	{
 		type: "sport",
@@ -90,5 +91,3 @@ const defaultNews: News[] = [
 		description: "Monsieur ABE sera absent ce jeudi 24 mai. Le cours de SAR-MAT2 de 8h est donc annulé et reporté à une date ultérieure.",
 	},
 ];
-
-export default defaultNews;

@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router";
 import Navbar from "../components/navbar";
+import NetworkStatusBar from "../components/network-status-bar";
 import { useAppStore } from "../store";
 
 export default function LoggedInLayout() {
@@ -29,6 +30,8 @@ export default function LoggedInLayout() {
 				}}>
 					<Outlet />
 				</div>
+
+				<NetworkStatusBar />
 
 				<Navbar />
 

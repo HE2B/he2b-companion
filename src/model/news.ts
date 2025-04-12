@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export type ReactI18NextChildren = ReactNode;
 
 export interface BaseNews {
-	id: string;
+	id: string; // TODO: remove, this will come from the firestore document
 	date: Date;
 	tags: NewsType[];
 }

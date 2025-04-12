@@ -44,6 +44,7 @@ export interface AuthSlice {
 	getTeacherMatricule: () => string,
 	login: () => Promise<void>,
 	logout: () => Promise<void>,
+	online: boolean,
 }
 
 export const createAuthStore: StateCreator<AppState, [], [], AuthSlice> = (set, get) => {
@@ -52,6 +53,14 @@ export const createAuthStore: StateCreator<AppState, [], [], AuthSlice> = (set, 
 
 		set(() => ({ user }));
 		redirect("/home");
+	});
+	window.addEventListener("offline", () => {
+		console.log("offline");
+		set(() => ({ online: false }));
+	});
+	window.addEventListener("online", () => {
+		console.log("online");
+		set(() => ({ online: true }));
 	});
 	return {
 		user: null,
@@ -83,5 +92,6 @@ export const createAuthStore: StateCreator<AppState, [], [], AuthSlice> = (set, 
 				redirect("/login");
 			})
 			.catch(console.error),
+		online: true,
 	};
 };

@@ -1,93 +1,164 @@
+import { getDocs } from "firebase/firestore";
 import { StateCreator } from "zustand";
-import { AppState } from ".";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "../firebase-config"; // <- adapte selon ton projet
+import { getBaseCalendarCollection } from "../firestore";
+import { Class as Clazz } from "../model/class";
+import { AppState } from "./index";
 
 export interface CalendarStore {
-  classes: Clazz[];
-  loadBaseClasses: () => Promise<void>;
-  getNextClass: () => Clazz | null;
-  getCurrentClass: () => Clazz | null;
-  getClassesOfDay: (year: number, month: number, date: number) => Clazz[];
-  getNext7Days: () => Date[];
+	classes: Clazz[];
+	loadBaseClasses: () => Promise<void>;
+	getNextClass: () => Clazz | null;
+	getCurrentClass: () => Clazz | null;
+	getClassesOfDay: (year: number, month: number, date: number) => Clazz[];
+	getNext7Days: () => Date[];
+	getClassColor: (classCode: string, isActive: boolean) => string;
 }
 
+const defaultClassColors: Record<string, Record<"active" | "inactive", string>> = {
+	"FRA": { "active": "#D72638", "inactive": "#B12B34" },
+	"MATH": { "active": "#3A0CA3", "inactive": "#1D2D9A" },
+	"PHY": { "active": "#4361EE", "inactive": "#3547B3" },
+	"CHI": { "active": "#2EC4B6", "inactive": "#2A8B7C" },
+	"HIS": { "active": "#F4A261", "inactive": "#9c4500" },
+	"GEO": { "active": "#2E8B57", "inactive": "#106113" },
+	"BIO": { "active": "#28A745", "inactive": "#1E7B34" },
+	"ART": { "active": "#FF6F61", "inactive": "#D64B3F" },
+	"CS": { "active": "#17A2B8", "inactive": "#128C98" },
+	"PE": { "active": "#FFC107", "inactive": "#D39E00" },
+	"conge": { "active": "#cccccc", "inactive": "#cccccc" },
+};
+
+const defaultClassColor = { active: "#cccccc", inactive: "#cccccc" };
+
 export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> = (set, get) => ({
-  classes: [],
+	classes: [],
+	loadBaseClasses: async () => {
+		const snapshot = await getDocs(getBaseCalendarCollection());
+		const loaded = snapshot.docs.map(doc => {
+			const data = doc.data();
 
-  loadBaseClasses: async () => {
-    const snapshot = await getDocs(collection(db, "base_calendar"));
-    const loaded = snapshot.docs.map(doc => {
-      const data = doc.data();
 
-      // Vérifie si startTime et endTime existent avant de les convertir
-      const startTime = data.startTime ? data.startTime.toDate() : null;
-      const endTime = data.endTime ? data.endTime.toDate() : null;
+			const startTime = data.startTime ? data.startTime.toDate() : null;
+			const endTime = data.endTime ? data.endTime.toDate() : null;
 
-      // Si startTime ou endTime est manquant, log l'erreur et continue avec les autres
-      if (!startTime || !endTime) {
-        console.error(`Document avec ID ${doc.id} a des champs de temps invalides. startTime ou endTime est manquant.`);
-        return null; // Retourne null pour les documents invalides
-      }
 
-      return {
-        ...data,
-        id: doc.id,
-        startTime,
-        endTime,
-      } as Clazz;
-    }).filter(clazz => clazz !== null); // Filtre les documents invalides
+			if(!startTime || !endTime) {
+				console.error(`Document avec ID ${doc.id} a des champs de temps invalides. startTime ou endTime est manquant.`);
+				return null;
+			}
 
-    set({ classes: loaded });
-  },
+			return {
+				...data,
+				id: doc.id,
+				startTime,
+				endTime,
+			} as Clazz;
+		}).filter(clazz => clazz !== null);
 
-  // Récupérer le prochain cours, qui commence après l'heure actuelle du jour
-  getNextClass: () => {
-    const { classes } = get();
-    const now = new Date();
+		set({ classes: loaded });
+	},
+	getNextClass: () => {
+		const { classes } = get();
+		const now = new Date();
 
-    return classes
-      .filter(c =>
-        c.startTime.getFullYear() === now.getFullYear() &&
-        c.startTime.getMonth() === now.getMonth() &&
-        c.startTime.getDate() === now.getDate() &&
-        c.startTime > now // Ajouter la condition pour vérifier que le cours commence après maintenant
-      )
-      .reduce<Clazz | null>((p, c) => (!p || c.startTime < p.startTime ? c : p), null);
-  },
+		return classes
+			.filter(c =>
+				c.startTime.getFullYear() === now.getFullYear() &&
+				c.startTime.getMonth() === now.getMonth() &&
+				c.startTime.getDate() === now.getDate() &&
+				c.startTime > now
+			)
+			.reduce<Clazz | null>((p, c) => (!p || c.startTime < p.startTime ? c : p), null);
+	},
+	getCurrentClass: () => {
+		const { classes } = get();
+		const now = new Date();
 
-  // Récupérer le cours actuel en cours
-  getCurrentClass: () => {
-    const { classes } = get(); // Récupérer la liste des cours
-    const now = new Date(); // Heure actuelle
+		return classes
+			.filter(c =>
 
-    return classes
-      .filter(c =>
-        // Vérifier que le cours est dans la même journée que la date actuelle
-        c.startTime.getFullYear() === now.getFullYear() &&
-        c.startTime.getMonth() === now.getMonth() &&
-        c.startTime.getDate() === now.getDate()
-      )
-      .filter(c => now >= c.startTime && now <= c.endTime) // Le cours est en cours
-      .reduce<Clazz | null>((p, c) => (!p || c.startTime < p.startTime ? c : p), null); // Retourner le cours en cours
-  },
+				c.startTime.getFullYear() === now.getFullYear() &&
+				c.startTime.getMonth() === now.getMonth() &&
+				c.startTime.getDate() === now.getDate()
+			)
+			.filter(c => now >= c.startTime && now <= c.endTime)
+			.reduce<Clazz | null>((p, c) => (!p || c.startTime < p.startTime ? c : p), null);
+	},
+	getClassesOfDay: (year, month, date) => {
+		const { classes } = get();
 
-  // Récupérer les cours du jour (vérifier le mois et la date)
-  getClassesOfDay: (year, month, date) => {
-    const { classes } = get();
-
-    return classes
-      .filter(c =>
-        c.startTime.getFullYear() === year &&
-        c.startTime.getMonth() === month - 1 && // Correction pour le mois, JS indexe de 0 à 11
-        c.startTime.getDate() === date
-      )
-      .sort((a, b) => a.startTime.getTime() - b.startTime.getTime()); // Trier par heure de début
-  },
-
-  // Retourner les dates des 7 prochains jours
-  getNext7Days: () => {
-    const today = new Date();
-    return Array.from({ length: 7 }, (_, i) => new Date(today.getTime() + i * 86400000));
-  },
+		return classes
+			.filter(c =>
+				c.startTime.getFullYear() === year &&
+				c.startTime.getMonth() === month - 1 &&
+				c.startTime.getDate() === date
+			)
+			.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
+	},
+	getNext7Days: () => {
+		const today = new Date();
+		return Array.from({ length: 7 }, (_, i) => new Date(today.getTime() + i * 86400000));
+	},
+	getClassColor: (classCode, isActive) => (defaultClassColors[classCode] ?? defaultClassColor)[isActive ? "active" : "inactive"],
 });
+
+/*
+const loadBaseClasses = async () => {
+	const snapshot = await getDocs(getBaseCalendarCollection());
+	const loaded = snapshot.docs.map(doc => {
+		const data = doc.data();
+		const startTime = data.startTime ? data.startTime.toDate() : null;
+		const endTime = data.endTime ? data.endTime.toDate() : null;
+
+		if(!startTime || !endTime) {
+			console.error(`Document avec ID ${doc.id} a des champs de temps invalides.`);
+			return null;
+		}
+
+		return {
+			...data,
+			id: doc.id,
+			startTime,
+			endTime,
+		} as Clazz;
+	}).filter(clazz => clazz !== null);
+
+	console.log(loaded);
+	set({ classes: loaded });
+};
+
+export const seedCalendar = async () => {
+	const querySnapshot = await getDocs(getBaseCalendarCollection());
+	const existingClasses = querySnapshot.docs.map(doc => doc.data());
+
+
+	const classesToAdd = newClasses.filter((newClass) => {
+		const existingClass = existingClasses.find(existing => existing.id === newClass.id);
+		if(!existingClass) return true;
+
+		const existingStartTime = existingClass.startTime.toDate();
+		const existingEndTime = existingClass.endTime.toDate();
+
+		if(existingStartTime.toISOString() !== newClass.startTime.toISOString() ||
+			existingEndTime.toISOString() !== newClass.endTime.toISOString()) return true;
+
+		return false;
+	});
+
+
+	if(classesToAdd.length > 0) {
+		const promises = classesToAdd.map((clazz) =>
+			setDoc(doc(getBaseCalendarCollection(), clazz.id), {
+				...clazz,
+				startTime: clazz.startTime,
+				endTime: clazz.endTime,
+			})
+		);
+
+		await Promise.all(promises);
+		console.log("✅ Nouveau calendrier semé avec succès!");
+	} else {
+		console.log("Aucun changement à apporter. Les cours sont déjà à jour.");
+	}
+};
+*/
