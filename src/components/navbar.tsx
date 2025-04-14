@@ -43,7 +43,7 @@ export default function Navbar() {
 
 	return (
 		<>
-			<TabBar activeKey={location.pathname}>
+			<TabBar activeKey={location.pathname} style={{paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 10px)"}}>
 				{tabs.map(item => (
 					<TabBar.Item
 						icon={item.icon}
