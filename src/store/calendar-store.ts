@@ -97,7 +97,7 @@ export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> 
 	},
 	getNext7Days: () => {
 		const today = new Date();
-		return Array.from({ length: 7 }, (_, i) => new Date(today.getTime() + i * 86400000));
+		return Array.from({ length: 15 }, (_, i) => new Date(today.getTime() + i * 86400000));
 	},
 	getClassColor: (classCode, isActive) => (defaultClassColors[classCode] ?? defaultClassColor)[isActive ? "active" : "inactive"],
 });
