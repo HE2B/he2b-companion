@@ -1,9 +1,10 @@
 import { Avatar, TabBar } from "antd-mobile";
 import { useEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { TbCalendarWeekFilled, TbHomeFilled, TbNews, TbUserFilled } from "react-icons/tb";
+import { TbCalendarWeekFilled, TbHomeFilled, TbNews, TbUserFilled, TbChartLine } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../store";
+import { path, title } from "framer-motion/client";
 
 export default function Navbar() {
 	const { t } = useTranslation();
@@ -19,6 +20,11 @@ export default function Navbar() {
 			title: t("calendar"),
 			path: "/schedule",
 			icon: <TbCalendarWeekFilled />,
+		},
+		{
+			title: t("marks"),
+			path: "/marks",
+			icon: <TbChartLine />,
 		},
 		{
 			title: t("news"),

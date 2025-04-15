@@ -37,16 +37,6 @@ export default function Profile() {
 					</Link>
 
 					<Link
-						to="/marks"
-						style={linkStyle}>
-						<Button
-							block
-							style={linkButtonStyle}>
-							Marks
-						</Button>
-					</Link>
-
-					<Link
 						to="/settings"
 						style={linkStyle}>
 						<Button

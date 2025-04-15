@@ -53,7 +53,7 @@ export default function News() {
 							fill={tagFilters.includes(tag) ? "solid" : "outline"}
 							key={tag}
 							style={{
-								color: '#000',
+								color: "var(--adm-color-text)",
 								padding: '4px 12px',
 								"--border-radius": "5px",
 							}}
