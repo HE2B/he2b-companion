@@ -6,9 +6,9 @@ import { useAppStore } from "../store";
 
 export default function SeedAndSchedulePage() {
 	const { t } = useTranslation();
-	const { getNext7Days, getClassesOfDay, getClassColor } = useAppStore();
+	const { getNext15Days, getClassesOfDay, getClassColor } = useAppStore();
 
-	const next7Days = getNext7Days();
+	const next7Days = getNext15Days();
 	const [selectedDate, setSelectedDate] = useState(next7Days[0]);
 
 	const classesForDay = getClassesOfDay(selectedDate.getFullYear(), selectedDate.getMonth() + 1, selectedDate.getDate());

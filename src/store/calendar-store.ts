@@ -10,7 +10,7 @@ export interface CalendarStore {
 	getNextClass: () => Clazz | null;
 	getCurrentClass: () => Clazz | null;
 	getClassesOfDay: (year: number, month: number, date: number) => Clazz[];
-	getNext7Days: () => Date[];
+	getNext15Days: () => Date[];
 	getClassColor: (classCode: string, isActive: boolean) => string;
 }
 
@@ -95,7 +95,7 @@ export const createCalendarStore: StateCreator<AppState, [], [], CalendarStore> 
 			)
 			.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
 	},
-	getNext7Days: () => {
+	getNext15Days: () => {
 		const today = new Date();
 		return Array.from({ length: 15 }, (_, i) => new Date(today.getTime() + i * 86400000));
 	},
