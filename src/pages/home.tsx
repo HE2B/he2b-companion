@@ -1,5 +1,5 @@
 import { Space } from "antd-mobile";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import ScheduledClass from "../components/scheduled-class";
 import { useAppStore } from "../store";
@@ -19,13 +19,14 @@ export default function Home() {
 				<h2>
 					<center>
 						{t("hello", { firstName: getFirstName() })}
-						<motion.span
+						{/* <motion.span
 							animate={{ rotate: [0, 30, 0] }}
 							transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
 							style={{ display: "inline-block" }}
 						>
 							👋
-						</motion.span>
+						</motion.span> */}
+						👋
 					</center>
 				</h2>
 

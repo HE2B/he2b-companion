@@ -6,9 +6,7 @@ import { useAppStore } from "../store";
 export default function LoggedInLayout() {
 	const { isLoggedIn } = useAppStore();
 
-	if(!isLoggedIn()) {
-		return <Navigate to="/login" />;
-	}
+	if(!isLoggedIn()) return <Navigate to="/login" />;
 
 	return (
 		<>

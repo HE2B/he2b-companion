@@ -2,42 +2,24 @@ import { ConfigProvider, SafeArea } from "antd-mobile";
 import enUS from "antd-mobile/es/locales/en-US";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { Route, Routes } from "react-router";
-
-import Login from "./pages/login";
-import News from "./pages/news";
-import Profile from "./pages/profile";
-import Schedule from "./pages/schedule";
+import { Outlet, useNavigation } from "react-router";
 
 import PWABadge from "./PWABadge";
-import LoggedInLayout from "./layouts/logged-in-layout";
-import LoggedOutLayout from "./layouts/logged-out-layout";
-import Home from "./pages/home";
-import Marks from "./pages/marks";
-import PersonalInfo from "./pages/personal-info";
-import Settings from "./pages/settings";
+import LoadingLayout from "./layouts/loading-layout";
 
 export default function App() {
+	const navigation = useNavigation();
+	const isNavigating = Boolean(navigation.location);
+
 	return (
 		<>
 			<ConfigProvider locale={enUS}>
 				<HelmetProvider>
 					<Head />
 					<SafeArea position="top" />
-					<Routes>
-						<Route path="/login" element={<LoggedOutLayout />}>
-							<Route path="" element={<Login />} />
-						</Route>
-						<Route path="/" element={<LoggedInLayout />}>
-							<Route path="home" element={<Home />} />
-							<Route path="schedule" element={<Schedule />} />
-							<Route path="news" element={<News />} />
-							<Route path="profile" element={<Profile />} />
-							<Route path="settings" element={<Settings />} />
-							<Route path="marks" element={<Marks />} />
-							<Route path="personal-info" element={<PersonalInfo />} />
-						</Route>
-					</Routes>
+					{isNavigating
+						? <LoadingLayout />
+						: <Outlet />}
 					<PWABadge />
 					<SafeArea position="bottom" />
 				</HelmetProvider>
