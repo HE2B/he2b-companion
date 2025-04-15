@@ -1,4 +1,4 @@
-import { Avatar, TabBar } from "antd-mobile";
+import { Avatar, TabBar, Badge, Space } from "antd-mobile";
 import { useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { TbCalendarWeekFilled, TbHomeFilled, TbNews, TbUserFilled, TbChartLine } from "react-icons/tb";
@@ -24,12 +24,20 @@ export default function Navbar() {
 		{
 			title: t("marks"),
 			path: "/marks",
-			icon: <TbChartLine />,
+			icon: (
+				<Badge content="12" color="red">
+					<TbChartLine />
+				</Badge>
+			),
 		},
 		{
 			title: t("news"),
 			path: "/news",
-			icon: <TbNews />,
+			icon: (
+			<Badge content="2" color="red">
+				<TbNews />
+			</Badge>
+			),
 		},
 		{
 			title: t("profile"),
