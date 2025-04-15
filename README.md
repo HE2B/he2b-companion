@@ -35,7 +35,11 @@ Companion app for the HE2B; central place for all information about the school a
 
 ## Features
 
-## TODO
+- News feed, with push notifications
+- Create and view own schedule, based on schedules for groups
+- View absences
+- View marks
 
-- [ ] Faire une logique pour le: calendrier, cours, notes, absence
-- [ ] Consulter et ajouter du contenue dans la [Documentation](https://docs.google.com/document/d/1fdJyM9-bRSv7d53SU1ya3Upqi7zF6maDvJMat-Wk2vg/edit?usp=sharing)
+## Analysis
+
+<https://docs.google.com/document/d/1fdJyM9-bRSv7d53SU1ya3Upqi7zF6maDvJMat-Wk2vg/edit?usp=sharing>

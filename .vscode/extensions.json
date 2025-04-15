@@ -1,5 +1,13 @@
 {
 	"recommendations": [
-		"jebbs.plantuml"
+		"jebbs.plantuml",
+		"fill-labs.dependi",
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint",
+		"visualstudioexptteam.vscodeintellicode",
+		"ms-vscode.vscode-typescript-next",
+		"davidanson.vscode-markdownlint",
+		"richie5um2.vscode-sort-json",
+		"tyriar.sort-lines"
 	]
 }

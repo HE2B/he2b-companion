@@ -8,7 +8,7 @@ i18n
 	.use(initReactI18next)
 	.init({
 		resources: {
-			en: { translation: en satisfies typeof en },
+			en: { translation: en satisfies typeof en }, // TODO: load dynamically
 			fr: { translation: fr satisfies typeof en },
 		},
 		lng: "fr",

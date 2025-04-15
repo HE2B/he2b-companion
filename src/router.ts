@@ -10,7 +10,7 @@ import Schedule from "./pages/schedule";
 import Settings from "./pages/settings";
 
 const lazyLoadComp = (path: string) => async () => {
-	const { default: Component } = await import(path);
+	const { default: Component } = await import(`./pages/${path}.tsx`);
 	return { Component };
 };
 
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
 				path: "login",
 				Component: LoggedOutLayout,
 				children: [
-					{ path: "", lazy: lazyLoadComp("./pages/login") },
+					{ path: "", lazy: lazyLoadComp("login") },
 				],
 			},
 			{
@@ -33,11 +33,11 @@ export const router = createBrowserRouter([
 					{ index: true, Component: Home },
 					{ path: "home", Component: Home },
 					{ path: "schedule", Component: Schedule },
-					{ path: "marks", lazy: lazyLoadComp("./pages/marks") },
-					{ path: "news", lazy: lazyLoadComp("./pages/news") },
-					{ path: "profile", lazy: lazyLoadComp("./pages/profile") },
+					{ path: "marks", lazy: lazyLoadComp("marks") },
+					{ path: "news", lazy: lazyLoadComp("news") },
+					{ path: "profile", lazy: lazyLoadComp("profile") },
 					{ path: "settings", Component: Settings },
-					{ path: "personal-info", lazy: lazyLoadComp("./pages/personal-info") },
+					{ path: "personal-info", lazy: lazyLoadComp("personal-info") },
 				],
 			},
 		],

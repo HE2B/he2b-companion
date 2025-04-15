@@ -9,6 +9,7 @@ export interface School {
 		city: string;
 	};
 	phoneNumber: string;
+	// TODO: add email
 	color: string;
 	// TODO: add base64 logos
 }
