@@ -1,10 +1,9 @@
-import { Avatar, TabBar, Badge, Space } from "antd-mobile";
+import { Avatar, Badge, TabBar } from "antd-mobile";
 import { useEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { TbCalendarWeekFilled, TbHomeFilled, TbNews, TbUserFilled, TbChartLine } from "react-icons/tb";
+import { TbCalendarWeekFilled, TbChartLine, TbHomeFilled, TbNews, TbUserFilled } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router";
 import { useAppStore } from "../store";
-import { path, title } from "framer-motion/client";
 
 export default function Navbar() {
 	const { t } = useTranslation();
@@ -34,9 +33,9 @@ export default function Navbar() {
 			title: t("news"),
 			path: "/news",
 			icon: (
-			<Badge content="2" color="red">
-				<TbNews />
-			</Badge>
+				<Badge content="2" color="red">
+					<TbNews />
+				</Badge>
 			),
 		},
 		{
@@ -57,7 +56,7 @@ export default function Navbar() {
 
 	return (
 		<>
-			<TabBar activeKey={location.pathname} style={{paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 10px)"}}>
+			<TabBar activeKey={location.pathname}>
 				{tabs.map(item => (
 					<TabBar.Item
 						icon={item.icon}
