@@ -1,5 +1,7 @@
 import { ConfigProvider, SafeArea } from "antd-mobile";
 import enUS from "antd-mobile/es/locales/en-US";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router";
 
 import Login from "./pages/login";
@@ -19,24 +21,41 @@ export default function App() {
 	return (
 		<>
 			<ConfigProvider locale={enUS}>
-				<SafeArea position="top" />
-				<Routes>
-					<Route path="/login" element={<LoggedOutLayout />}>
-						<Route path="" element={<Login />} />
-					</Route>
-					<Route path="/" element={<LoggedInLayout />}>
-						<Route path="home" element={<Home />} />
-						<Route path="schedule" element={<Schedule />} />
-						<Route path="news" element={<News />} />
-						<Route path="profile" element={<Profile />} />
-						<Route path="settings" element={<Settings />} />
-						<Route path="marks" element={<Marks />} />
-						<Route path="personal-info" element={<PersonalInfo />} />
-					</Route>
-				</Routes>
-				<PWABadge />
-				<SafeArea position="bottom" />
+				<HelmetProvider>
+					<Head />
+					<SafeArea position="top" />
+					<Routes>
+						<Route path="/login" element={<LoggedOutLayout />}>
+							<Route path="" element={<Login />} />
+						</Route>
+						<Route path="/" element={<LoggedInLayout />}>
+							<Route path="home" element={<Home />} />
+							<Route path="schedule" element={<Schedule />} />
+							<Route path="news" element={<News />} />
+							<Route path="profile" element={<Profile />} />
+							<Route path="settings" element={<Settings />} />
+							<Route path="marks" element={<Marks />} />
+							<Route path="personal-info" element={<PersonalInfo />} />
+						</Route>
+					</Routes>
+					<PWABadge />
+					<SafeArea position="bottom" />
+				</HelmetProvider>
 			</ConfigProvider>
+		</>
+	);
+}
+
+function Head() {
+	const { t } = useTranslation();
+
+	return (
+		<>
+			<Helmet>
+				<meta name="description" content={t("meta-description")} />
+				<meta name="keywords" content={t("meta-keywords")} />
+				<meta name="author" content={t("meta-author")} />
+			</Helmet>
 		</>
 	);
 }

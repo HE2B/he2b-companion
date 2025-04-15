@@ -23,5 +23,8 @@
 	"theme": "Thème",
 	"next_class": "Prochain cours",
 	"room": "Salle",
-	"no_class_on_that_day": "Aucun cours ce jour-là."
+	"no_class_on_that_day": "Aucun cours ce jour-là.",
+	"meta_description": "HE2B Companion - Application de gestion de l'HE2B",
+	"meta_keywords": "HE2B, HE2B Companion, HE2B App, HE2B Application, HE2B Gestion, HE2B Gestionnaire, HE2B Outils, HE2B Outil",
+	"meta_author": "HE2B"
 }
